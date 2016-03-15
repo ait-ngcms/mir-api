@@ -1,0 +1,1068 @@
+{
+
+    "response": 
+
+{
+
+    "document": 
+
+{
+
+    "title": 
+
+[
+
+    "Silver Spire ; Farrell Gara "
+
+],
+"edmDatasetName": 
+[
+
+    "2059213_Ag_EU_eSOUNDS_1013_ITMA"
+
+],
+"places": 
+[
+
+{
+
+    "about": "http://sws.geonames.org/2963597/",
+    "prefLabel": 
+
+{
+
+    "to": 
+
+[
+
+    "ʻAealani"
+
+],
+"ca": 
+[
+
+    "Irlanda",
+    "República d'Irlanda"
+
+],
+"tl": 
+[
+
+    "Ireland",
+    "Republika ng Irlanda"
+
+],
+"tr": 
+[
+
+    "İrlanda"
+
+],
+"no": 
+[
+
+    "Republikken Irland"
+
+],
+"nn": 
+[
+
+    "Irland",
+    "Republikken Irland"
+
+],
+"fy": 
+[
+
+    "Ierlân"
+
+],
+"tg": 
+[
+
+    "Ҷумҳӯрии Ирландия"
+
+],
+"gd": 
+[
+
+    "Poblachd na h-Éireann"
+
+],
+"bs": 
+[
+
+    "Irska",
+    "Republika Irska"
+
+],
+"br": 
+[
+
+    "Republik Iwerzhon"
+
+],
+"ga": 
+[
+
+    "Poblacht na hÉireann",
+    "Éire"
+
+],
+"th": 
+[
+
+    "สาธารณรัฐไอร์แลนด์",
+    "ไอร์แลนด์"
+
+],
+"bn": 
+[
+
+    "আয়ারল্যান্ড",
+    "আয়ার্লণ্ড"
+
+],
+"bo": 
+[
+
+    "ཨ་ཡར་ལནཌ།"
+
+],
+"oc": 
+[
+
+    "Irlanda"
+
+],
+"fi": 
+[
+
+    "Irlanti"
+
+],
+"ta": 
+[
+
+    "அயர்லாந்து"
+
+],
+"ka": 
+[
+
+    "ირლანდია"
+
+],
+"bg": 
+[
+
+    "Ирландия",
+    "Република Ирландия"
+
+],
+"sv": 
+[
+
+    "Irland"
+
+],
+"fr": 
+[
+
+    "Irlande"
+
+],
+"fo": 
+[
+
+    "Írland"
+
+],
+"be": 
+[
+
+    "Ірландыя",
+    "Рэспубліка Ірляндыя"
+
+],
+"kw": 
+[
+
+    "Repoblek Iwerdhon"
+
+],
+"sl": 
+[
+
+    "Irska"
+
+],
+"sk": 
+[
+
+    "Írsko"
+
+],
+"da": 
+[
+
+    "Irland"
+
+],
+"so": 
+[
+
+    "Ayrlaanda"
+
+],
+"sr": 
+[
+
+    "Ирска",
+    "Република Ирска"
+
+],
+"ku": 
+[
+
+    "Komara Îrlanda"
+
+],
+"sq": 
+[
+
+    "Irlanda",
+    "Irlandë"
+
+],
+"ko": 
+[
+
+    "아일랜드"
+
+],
+"cy": 
+[
+
+    "Gweriniaeth Iwerddon",
+    "Iwerddon"
+
+],
+"he": 
+[
+
+    "אירלנד"
+
+],
+"se": 
+[
+
+    "Irlánda"
+
+],
+"sh": 
+[
+
+    "Irska"
+
+],
+"km": 
+[
+
+    "អៀរឡង់"
+
+],
+"cs": 
+[
+
+    "Irsko",
+    "Irská republika"
+
+],
+"li": 
+[
+
+    "Ierland"
+
+],
+"co": 
+[
+
+    "Irlanda"
+
+],
+"gl": 
+[
+
+    "Irlanda",
+    "Irlanda - Éire"
+
+],
+"la": 
+[
+
+    "Irlandia"
+
+],
+"pl": 
+[
+
+    "Irlandia"
+
+],
+"gv": 
+[
+
+    "Pobblaght Nerin"
+
+],
+"ru": 
+[
+
+    "Ирландия"
+
+],
+"lb": 
+[
+
+    "Irland"
+
+],
+"lo": 
+[
+
+    "ໄອແລນ"
+
+],
+"hr": 
+[
+
+    "Irska"
+
+],
+"zh": 
+[
+
+    "爱尔兰",
+    "爱尔兰共和国"
+
+],
+"ro": 
+[
+
+    "Irlanda",
+    "Republica Irlanda"
+
+],
+"rm": 
+[
+
+    "Republica da l'Irlanda"
+
+],
+"vi": 
+[
+
+    "Ai-len",
+    "Cộng hòa Ireland",
+    "Ireland (Ái Nhĩ Lan)"
+
+],
+"dz": 
+[
+
+    "ཨའིརི་ལེནཌ"
+
+],
+"hu": 
+[
+
+    "Írország"
+
+],
+"lv": 
+[
+
+    "Īrija"
+
+],
+"hi": 
+[
+
+    "आयरलैंड",
+    "आयरलैण्ड"
+
+],
+"lt": 
+[
+
+    "Airija"
+
+],
+"vo": 
+[
+
+    "Lireyän"
+
+],
+"de": 
+[
+
+    "Irland"
+
+],
+"id": 
+[
+
+    "Irlandia",
+    "Republik Irlandia"
+
+],
+"ia": 
+[
+
+    "Irlanda"
+
+],
+"def": 
+[
+
+    "IE",
+    "Irish Free State",
+    "Irish Republic",
+    "Republic of Ireland",
+    "Saorstát Eireann",
+    "Éire"
+
+],
+"hy": 
+[
+
+    "Իռլանդիա"
+
+],
+"mk": 
+[
+
+    "Ирска"
+
+],
+"ml": 
+[
+
+    "ഐയര്‍ലാന്‍റ്"
+
+],
+"uk": 
+[
+
+    "Ірландія",
+    "Республіка Ірландія"
+
+],
+"is": 
+[
+
+    "Írland",
+    "Írska lýðveldið"
+
+],
+"eu": 
+[
+
+    "Irlanda"
+
+],
+"it": 
+[
+
+    "Irlanda",
+    "Repubblica d'Irlanda"
+
+],
+"mt": 
+[
+
+    "Irlanda"
+
+],
+"ms": 
+[
+
+    "Ireland"
+
+],
+"fa": 
+[
+
+    "ایرلند"
+
+],
+"ur": 
+[
+
+    "آئر لینڈ",
+    "جمہوریہ آئرلینڈ"
+
+],
+"ar": 
+[
+
+    "أيرلاندا",
+    "ايرلندا",
+    "جمهورية إيرلندا"
+
+],
+"io": 
+[
+
+    "Irlando"
+
+],
+"na": 
+[
+
+    "Republik Ireland"
+
+],
+"el": 
+[
+
+    "Δημοκρατία της Ιρλανδίας",
+    "Ιρλανδία"
+
+],
+"nb": 
+[
+
+    "Irland"
+
+],
+"am": 
+[
+
+    "አየርላንድ",
+    "አየርላንድ ሪፑብሊክ"
+
+],
+"ne": 
+[
+
+    "आयरल्याण्ड"
+
+],
+"an": 
+[
+
+    "Irlanda"
+
+],
+"pt": 
+[
+
+    "Irlanda",
+    "República da Irlanda"
+
+],
+"eo": 
+[
+
+    "Irlando",
+    "Respubliko de Irlando"
+
+],
+"en": 
+[
+
+    "Ireland",
+    "Republic of Ireland"
+
+],
+"et": 
+[
+
+    "Iiri",
+    "Iirimaa"
+
+],
+"es": 
+[
+
+    "Irlanda",
+    "República de Irlanda"
+
+],
+"ja": 
+[
+
+    "アイルランド"
+
+],
+"nl": 
+[
+
+    "Ierland"
+
+],
+"ps": 
+[
+
+    "د آيرلېنډ جمهوريت"
+
+],
+"af": 
+
+            [
+                "Ierland",
+                "Republiek van Ierland"
+            ]
+        }
+    }
+
+],
+"timespans": 
+[
+
+{
+
+    "about": "http://semium.org/time/19xx",
+    "prefLabel": 
+
+{
+
+    "def": 
+
+[
+
+    "20..",
+    "20??",
+    "20e"
+
+],
+"fr": 
+[
+
+    "20e siècle"
+
+],
+"en": 
+[
+
+    "20-th",
+    "20th",
+    "20th century"
+
+],
+"ru": 
+[
+
+    "20й век"
+
+],
+"nl": 
+
+    [
+        "20de eeuw"
+    ]
+
+},
+"begin": 
+{
+
+    "def": 
+
+    [
+        "Tue Jan 01 00:19:32 CET 1901"
+    ]
+
+},
+"end": 
+{
+
+    "def": 
+
+    [
+        "Sun Dec 31 01:00:00 CET 2000"
+    ]
+
+},
+"isPartOf": 
+{
+
+    "fr": 
+
+        [
+            "http://semium.org/time/AD2xxx"
+        ]
+    }
+
+},
+{
+
+    "about": "http://semium.org/time/AD2xxx",
+    "prefLabel": 
+
+{
+
+    "fr": 
+
+[
+
+    "2e millénaire après J.-C."
+
+],
+"en": 
+
+        [
+            "Second millenium AD",
+            "Second millenium AD, years 1001-2000"
+        ]
+    }
+
+},
+{
+
+    "about": "http://semium.org/time/ChronologicalPeriod",
+    "prefLabel": 
+
+{
+
+    "en": 
+
+    [
+        "Chronological period"
+    ]
+
+},
+"isPartOf": 
+{
+
+    "def": 
+
+        [
+            "http://semium.org/time/Time"
+        ]
+    }
+
+},
+{
+
+    "about": "http://semium.org/time/Time",
+    "prefLabel": 
+
+{
+
+    "en": 
+
+            [
+                "Time"
+            ]
+        }
+    }
+
+],
+"concepts": 
+[
+
+{
+
+    "about": "http://data.europeana.eu/concept/soundgenres/Music/Traditional_and_folk_music",
+    "prefLabel": 
+
+{
+
+    "de": 
+
+[
+
+    "Traditionelle und Volksmusik"
+
+],
+"it": 
+[
+
+    "Musica tradizionale e folk"
+
+],
+"pl": 
+[
+
+    "Muzyki tradycyjnej i ludowej"
+
+],
+"fr": 
+[
+
+    "Musique traditionnelle et folklorique"
+
+],
+"en": 
+[
+
+    "Traditional and folk music"
+
+],
+"es": 
+
+            [
+                "Música tradicional y popular"
+            ]
+        }
+    }
+
+],
+"aggregations": 
+[
+
+{
+
+    "about": "/aggregation/provider/2059213/data_sounds_9051",
+    "edmDataProvider": 
+
+{
+
+    "def": 
+
+    [
+        "Irish Traditional Music Archive"
+    ]
+
+},
+"edmIsShownBy": "http://s3-eu-west-1.amazonaws.com/itma.dl.audio/europeana_78s/232167.mp3",
+"edmIsShownAt": "http://www.europeana.eu/api/RbWPAapQ6/redirect?shownAt=http%3A%2F%2Fwww.itma.ie%2Fdigitallibrary%2Fsound%2FCID-232167&provider=Europeana+Sounds&id=http%3A%2F%2Fwww.europeana.eu%2Fresolve%2Frecord%2F2059213%2Fdata_sounds_9051&profile=full",
+"edmObject": "http://s3-eu-west-1.amazonaws.com/itma.dl.images/78s/232167.jpg",
+"edmProvider": 
+{
+
+    "def": 
+
+    [
+        "Europeana Sounds"
+    ]
+
+},
+"edmRights": 
+{
+
+    "def": 
+
+    [
+        "http://creativecommons.org/publicdomain/mark/1.0/"
+    ]
+
+},
+"aggregatedCHO": "/item/2059213/data_sounds_9051",
+"webResources": 
+[
+
+{
+
+    "about": "http://s3-eu-west-1.amazonaws.com/itma.dl.audio/europeana_78s/232167.mp3",
+    "textAttributionSnippet": "Silver Spire ; Farrell Gara - http://europeana.eu/portal/record/2059213/data_sounds_9051.html. Killoran, Paddy and Sweeney, Paddy. Irish Traditional Music Archive - http://www.itma.ie/digitallibrary/sound/CID-232167. Public Domain - http://creativecommons.org/publicdomain/mark/1.0/",
+    "htmlAttributionSnippet": "<span about='http://data.europeana.eu/item/2059213/data_sounds_9051'><a href='http://europeana.eu/portal/record/2059213/data_sounds_9051.html'><span property='dc:title'>Silver Spire ; Farrell Gara</span></a>. <span property='dc:creator'>Killoran, Paddy and Sweeney, Paddy. </span><a href='http://www.itma.ie/digitallibrary/sound/CID-232167'>Irish Traditional Music Archive</a>. <a href='http://creativecommons.org/publicdomain/mark/1.0/' rel='xhv:license http://www.europeana.eu/schemas/edm/rights'>Public Domain</a><span rel='cc:useGuidelines' resource='http://www.europeana.eu/rights/pd-usage-guide/'>.</span></span>"
+
+},
+
+            {
+                "about": "http://s3-eu-west-1.amazonaws.com/itma.dl.images/78s/232167.jpg",
+                "textAttributionSnippet": "Silver Spire ; Farrell Gara - http://europeana.eu/portal/record/2059213/data_sounds_9051.html. Killoran, Paddy and Sweeney, Paddy. Irish Traditional Music Archive - http://www.itma.ie/digitallibrary/sound/CID-232167. Public Domain - http://creativecommons.org/publicdomain/mark/1.0/",
+                "htmlAttributionSnippet": "<span about='http://data.europeana.eu/item/2059213/data_sounds_9051'><a href='http://europeana.eu/portal/record/2059213/data_sounds_9051.html'><span property='dc:title'>Silver Spire ; Farrell Gara</span></a>. <span property='dc:creator'>Killoran, Paddy and Sweeney, Paddy. </span><a href='http://www.itma.ie/digitallibrary/sound/CID-232167'>Irish Traditional Music Archive</a>. <a href='http://creativecommons.org/publicdomain/mark/1.0/' rel='xhv:license http://www.europeana.eu/schemas/edm/rights'>Public Domain</a><span rel='cc:useGuidelines' resource='http://www.europeana.eu/rights/pd-usage-guide/'>.</span></span>"
+            }
+        ],
+        "edmPreviewNoDistribute": false
+    }
+
+],
+"proxies": 
+[
+
+{
+
+    "about": "/proxy/provider/2059213/data_sounds_9051",
+    "dcCreator": 
+
+{
+
+    "def": 
+
+    [
+        "Killoran, Paddy and Sweeney, Paddy"
+    ]
+
+},
+"dcFormat": 
+{
+
+    "def": 
+
+    [
+        "78 rpm"
+    ]
+
+},
+"dcIdentifier": 
+{
+
+    "def": 
+
+    [
+        "2556"
+    ]
+
+},
+"dcPublisher": 
+{
+
+    "def": 
+
+    [
+        "England : Imperial, [n.d.]"
+    ]
+
+},
+"dcSubject": 
+{
+
+    "def": 
+
+    [
+        "Ireland: Instrumental Music",
+        "http://data.europeana.eu/concept/soundgenres/Music/Traditional_and_folk_music",
+        "Irish Traditional"
+    ]
+
+},
+"dcTitle": 
+{
+
+    "def": 
+
+    [
+        "Silver Spire ; Farrell Gara "
+    ]
+
+},
+"dctermsSpatial": 
+{
+
+    "def": 
+
+    [
+        "Ireland"
+    ]
+
+},
+"dctermsTemporal": 
+{
+
+    "def": 
+
+    [
+        "20th Century"
+    ]
+
+},
+"proxyIn": 
+
+    [
+        "/aggregation/provider/2059213/data_sounds_9051"
+    ],
+    "proxyFor": "/item/2059213/data_sounds_9051",
+    "edmType": "SOUND",
+    "europeanaProxy": false
+
+},
+{
+
+    "about": "/proxy/europeana/2059213/data_sounds_9051",
+    "dctermsSpatial": 
+
+{
+
+    "def": 
+
+    [
+        "http://sws.geonames.org/2963597/"
+    ]
+
+},
+"dctermsTemporal": 
+{
+
+    "def": 
+
+    [
+        "http://semium.org/time/19xx"
+    ]
+
+},
+"proxyIn": 
+
+        [
+            "/aggregation/europeana/2059213/data_sounds_9051"
+        ],
+        "proxyFor": "/item/2059213/data_sounds_9051",
+        "edmType": "SOUND",
+        "europeanaProxy": true
+    }
+
+],
+"language": 
+[
+
+    "en"
+
+],
+"europeanaCompleteness": ​5,
+"providedCHOs": 
+[
+
+    {
+        "about": "/item/2059213/data_sounds_9051"
+    }
+
+],
+"europeanaAggregation": 
+{
+
+    "about": "/aggregation/europeana/2059213/data_sounds_9051",
+    "aggregatedCHO": "/item/2059213/data_sounds_9051",
+    "edmLandingPage": "http://europeana.eu/portal/record/2059213/data_sounds_9051.html",
+    "edmCountry": 
+
+{
+
+    "def": 
+
+    [
+        "ireland"
+    ]
+
+},
+"edmLanguage": 
+{
+
+    "def": 
+
+        [
+            "en"
+        ]
+    },
+    "edmPreview": "http://europeanastatic.eu/api/image?uri=http%3A%2F%2Fs3-eu-west-1.amazonaws.com%2Fitma.dl.images%2F78s%2F232167.jpg&size=LARGE&type=SOUND"
+
+},
+"europeanaCollectionName": 
+
+            [
+                "2059213_Ag_EU_eSOUNDS_1013_ITMA"
+            ],
+            "type": "SOUND",
+            "about": "/2059213/data_sounds_9051",
+            "timestamp_created_epoch": ​1453286975974,
+            "timestamp_update_epoch": ​1455199778964,
+            "timestamp_created": "2016-01-20T10:49:35.974Z",
+            "timestamp_update": "2016-02-11T14:09:38.964Z"
+        }
+    }
+
+}
