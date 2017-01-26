@@ -1,0 +1,20 @@
+﻿<add>
+     <doc>
+          <field name="record_id">123456789</field>
+          <field name="qdoc_id">987654321</field>
+          <field name="sdoc_id">01</field>
+          <field name="sdoc_score">100</field>
+          <field name="sdoc_title">Test Document 1</field>
+          <field name="sdoc_license">CC0</field>
+          <field name="sdoc_licence_group">Open Reuse</field>
+     </doc>
+     <doc>
+          <field name="record_id">987654321</field>
+          <field name="qdoc_id">123456789</field>
+          <field name="sdoc_id">02</field>
+          <field name="sdoc_score">200</field>
+          <field name="sdoc_title">Test Document 2</field>
+          <field name="sdoc_license">CC-BY</field>
+          <field name="sdoc_licence_group">Open Reuse</field>
+     </doc>
+</add>

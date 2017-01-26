@@ -145,6 +145,12 @@
 			<version>${version.springCore}</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>eu.europeana.api</groupId>
+			<artifactId>europeana-client</artifactId>
+			<version>0.2.0-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
 
 	</dependencies>
 
