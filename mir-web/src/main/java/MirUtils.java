@@ -4,7 +4,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
 import org.apache.commons.io.FileUtils;
@@ -29,7 +34,8 @@ public class MirUtils {
 	final String lineBreak = "\n"; 
 	final String tab = "\t"; 
 	final String pathSeparator = "\\\\";
-
+	final String PATH_ID_DELIMETER = "/";
+	
 	protected Logger log = Logger.getLogger(getClass());	
 
 	
@@ -53,25 +59,87 @@ public class MirUtils {
 	}
 	
 	
+    /**
+     * This is a help method from: 
+     * http://stackoverflow.com/questions/109383/sort-a-mapkey-value-by-values-java
+     * @param input map 
+     * @return map sorted by value
+     */
+    public static <K, V extends Comparable<? super V>> Map<K, V> 
+	    sortByValue( Map<K, V> map )
+	{
+	    List<Map.Entry<K, V>> list =
+	        new LinkedList<Map.Entry<K, V>>( map.entrySet() );
+	    Collections.sort( list, new Comparator<Map.Entry<K, V>>()
+	    {
+	        public int compare( Map.Entry<K, V> o1, Map.Entry<K, V> o2 )
+	        {
+	            return (o1.getValue()).compareTo( o2.getValue() );
+	        }
+	    } );
+	
+	    Map<K, V> result = new LinkedHashMap<K, V>();
+	    for (Map.Entry<K, V> entry : list)
+	    {
+	        result.put( entry.getKey(), entry.getValue() );
+	    }
+	    return result;
+	}	
+	
+    
+    /**
+     * @param indexFilePath
+     * @return
+     */
+    public List<String> readEuropeanaIdIndexForDistanceFile(String indexFilePath) {
+    	
+    	List<String> europeanaIdList = new ArrayList<String>();
+	
+		File csvFile = FileUtils.getFile(indexFilePath);
+		LineIterator iterator;
+		try {
+			iterator = FileUtils.lineIterator(csvFile);
+			
+			while (iterator.hasNext()) {				
+				String line = (String) iterator.next();
+				europeanaIdList.add(line);
+			}
+		} catch (IOException e) {
+			log.error("Error reading Europeana IDs from index for distance CSV file. " + e.getMessage());
+		}		
+		
+		return europeanaIdList;
+    }
+    
+    
 	/**
 	 * This method reads scores from extracted CSV file and creates
 	 * Mir entities.
 	 * 
 	 * @param csvFilePath
+	 * @param indexFilePath
 	 * @return list of Mir entities
 	 */
-	public List<MirEntity> readMirEntityWithScoresFromCsv(String csvFilePath) {
+	public List<MirEntity> readMirEntityWithScoresFromCsv(String csvFilePath, String indexFilePath) {
 		
 		final int NUMBERS_AFTER_COMMA = 4;
 		
-		final int RECORD_ID_POS = 4;
+		final int COLLECTION_ID_POS = 4;
 		final int QDOC_ID_POS = 1;
 		
 		List<MirEntity> mirEntityList = new ArrayList<MirEntity>();
 
-		List<Float> scoreList = new ArrayList<Float>();
+		/**
+		 * This is a mapping between Europeana IDs from index file
+		 * and scores from input CSV files.
+		 */
+		Map<String, Float> scoreMap = new HashMap<String, Float>();
+		
+		List<String> europeanaIdList = readEuropeanaIdIndexForDistanceFile(indexFilePath);
+		
 		File csvFile = FileUtils.getFile(csvFilePath);
 		LineIterator iterator;
+		int idx = 0;
 		try {
 			iterator = FileUtils.lineIterator(csvFile);
 			
@@ -81,6 +149,7 @@ public class MirUtils {
 				int pointPos = line.indexOf(".");
 				String floatPartStr = line.substring(pointPos + 1, line.length());
 				int lastIndex = pointPos + NUMBERS_AFTER_COMMA;
+				
 				/**
 				 * Check case when float number has fewer numbers after comma 
 				 * then specified in NUMBERS_AFTER_COMMA.
@@ -90,33 +159,32 @@ public class MirUtils {
 				}
 				String score = line.substring(0, lastIndex);
 				float floatScore = Float.parseFloat(score);
-				scoreList.add((Float) floatScore);
+				scoreMap.put(europeanaIdList.get(idx), floatScore);
+				idx++;
 			}
 		} catch (IOException e) {
 			log.error("Error reading scores from CSV file. " + e.getMessage());
 		}		
 		
-		Collections.sort(scoreList);
-		
-		int i = 0;
-		for (Float elem: scoreList) {
-			log.info("sorted elem i: " + elem);
-			i++;
-			if (i > 9) break;
-		}
+		scoreMap = sortByValue(scoreMap);
 
 		int cnt = 0;
-		for (Float elem: scoreList) {
-
+		for(Map.Entry<String, Float> entry : scoreMap.entrySet()) {		
+			
+			String sdocId = PATH_ID_DELIMETER + entry.getKey();
+			Float score = entry.getValue();
+			
 			MirEntity mirEntity = new MirEntity();
 			
 			String[] items = csvFilePath.split(pathSeparator);
-			String recordId = items[items.length - RECORD_ID_POS];
-			mirEntity.setRecordId(recordId);
-			String qdocId = items[items.length - QDOC_ID_POS].replace(".csv", "");
+			String collectionId = items[items.length - COLLECTION_ID_POS];
+			String docId = items[items.length - QDOC_ID_POS].replace(".csv", "");
+			String qdocId = PATH_ID_DELIMETER + collectionId + PATH_ID_DELIMETER + docId;
 			mirEntity.setQdocId(qdocId);
-			mirEntity.setSdocId(cnt);
-			mirEntity.setSdocScore(elem);
+			mirEntity.setSdocId(sdocId);
+			String recordId = qdocId + sdocId;
+			mirEntity.setRecordId(recordId);
+			mirEntity.setSdocScore(score);
 			mirEntityList.add(mirEntity);
 			log.info("added " + cnt + " Mir entity: " + mirEntity);
 			cnt++;
@@ -128,6 +196,7 @@ public class MirUtils {
 	
 	
 	/**
+	 * This method stores MIR entities according to the template in MirEntity object.
 	 * @param mirEntity
 	 * @param xmlPath
 	 * @return
@@ -147,7 +216,7 @@ public class MirUtils {
 			row.append(tab).append(tab).append("<field name=\"qdoc_id\">")
 				.append(mirEntity.getQdocId()).append("</field>").append(lineBreak);
 			row.append(tab).append(tab).append("<field name=\"sdoc_id\">")
-				.append(Integer.toString(mirEntity.getSdocId())).append("</field>").append(lineBreak);
+				.append(mirEntity.getSdocId()).append("</field>").append(lineBreak);
 			row.append(tab).append(tab).append("<field name=\"sdoc_score\">")
 				.append(Float.toString(mirEntity.getSdocScore())).append("</field>").append(lineBreak);
 			row.append(tab).append("</doc>").append(lineBreak);

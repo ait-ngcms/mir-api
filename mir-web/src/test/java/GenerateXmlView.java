@@ -14,6 +14,7 @@ public class GenerateXmlView extends BaseMirTest {
 
 
 	protected String TEST_COLLECTION = "2059206";
+	final String EUROPEANA_ID_INDEXES_FILE = "indexes_for_distance_resultfiles.csv";
 
 	String ANALYSIS_FOLDER = "analysis";
 	String CSV_FOLDER = "csv";
@@ -66,7 +67,8 @@ public class GenerateXmlView extends BaseMirTest {
 		
 		for (String csvFilePath : collectionFiles) {
 			
-			List<MirEntity> mirEntityList = getMirUtils().readMirEntityWithScoresFromCsv(csvFilePath);
+			List<MirEntity> mirEntityList = getMirUtils().readMirEntityWithScoresFromCsv(
+					csvFilePath, BASE_FILE_PATH + EUROPEANA_ID_INDEXES_FILE);
 			
 			boolean storeRes = getMirUtils().storeMirEntityInXml(
 					mirEntityList, csvFilePath.replace(CSV_FOLDER, XML_FOLDER));
