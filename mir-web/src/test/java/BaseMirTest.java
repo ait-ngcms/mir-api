@@ -27,6 +27,7 @@ import org.junit.Before;
 public abstract class BaseMirTest extends MirConst {
 
 	protected String BASE_FILE_PATH  = "./src/test/resources/";
+	protected String GENERATED_PATH  = BASE_FILE_PATH + "generated/solr/";
 
 	
 	private MirUtils mirUtils = null;

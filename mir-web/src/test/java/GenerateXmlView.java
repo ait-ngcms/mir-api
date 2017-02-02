@@ -28,7 +28,7 @@ public class GenerateXmlView extends BaseMirTest {
 //	@Test
 	public void extractMirCsvFiles() throws IOException {
 		
-		final File inputCollectionFolder = new File(BASE_FILE_PATH + TEST_COLLECTION);
+		final File inputCollectionFolder = new File(GENERATED_PATH + TEST_COLLECTION);
 		List<String> collectionFiles = getMirUtils().listFilesForFolder(inputCollectionFolder);
 
 		log.info(collectionFiles.get(0));
@@ -54,7 +54,7 @@ public class GenerateXmlView extends BaseMirTest {
 	public void readMirMetadata() throws IOException {
 		
 		final File metadataCollectionFolder = new File(
-				BASE_FILE_PATH + TEST_COLLECTION + "/" + METADATA_FOLDER);
+				GENERATED_PATH + TEST_COLLECTION + "/" + METADATA_FOLDER);
 		List<String> collectionFiles = getMirUtils().listFilesForFolder(metadataCollectionFolder);
 
 		log.info(collectionFiles.get(0));
@@ -79,7 +79,7 @@ public class GenerateXmlView extends BaseMirTest {
 	public void generateMirXmlView() throws IOException {
 		
 		final File inputCollectionFolder = new File(
-				BASE_FILE_PATH + TEST_COLLECTION + "/" + ANALYSIS_FOLDER + "/" + CSV_EXT);
+				GENERATED_PATH + TEST_COLLECTION + "/" + ANALYSIS_FOLDER + "/" + CSV_EXT);
 		List<String> collectionFiles = getMirUtils().listFilesForFolder(inputCollectionFolder);
 
 		log.info(collectionFiles.get(0));
