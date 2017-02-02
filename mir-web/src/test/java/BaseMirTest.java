@@ -24,7 +24,7 @@ import org.junit.Before;
  * @author GrafR
  *
  */
-public abstract class BaseMirTest {
+public abstract class BaseMirTest extends MirConst {
 
 	protected String BASE_FILE_PATH  = "./src/test/resources/";
 

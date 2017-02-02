@@ -8,6 +8,9 @@
  *		<field name="qdoc_id">/2059206/data_sounds_http___epth_sfm_gr_card_aspx_mid_1_</field>
  *		<field name="sdoc_id">/2059206/data_sounds_http___epth_sfm_gr_card_aspx_mid_14_</field>
  *		<field name="sdoc_score">1.231</field>
+ *      <field name="sdoc_title">Test Document 1</field>
+ *      <field name="sdoc_license">http://creativecommons.org/licenses/by-nc/4.0/</field>
+ *      <field name="sdoc_licence_group">Open Reuse</field>*
  *	</doc>
  *    
  * @author GrafR

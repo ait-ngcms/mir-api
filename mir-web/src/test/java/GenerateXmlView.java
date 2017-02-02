@@ -17,9 +17,7 @@ public class GenerateXmlView extends BaseMirTest {
 	final String EUROPEANA_ID_INDEXES_FILE = "indexes_for_distance_resultfiles.csv";
 
 	String ANALYSIS_FOLDER = "analysis";
-	String CSV_FOLDER = "csv";
-	String XML_FOLDER = "xml";
-
+	String METADATA_FOLDER = "metadata";
 	String MIR_OUTPUT = "mir-output.xml"; 
 	
 	int EUROPEANA_ID_COL_POS    = 0;
@@ -42,9 +40,9 @@ public class GenerateXmlView extends BaseMirTest {
 		for (String gzFilePath : collectionFiles) {
 			
 			String csvFilePath = getMirUtils().extractItemFromPackage(
-					gzFilePath, ANALYSIS_FOLDER + "\\"+ CSV_FOLDER + "\\");
+					gzFilePath, ANALYSIS_FOLDER + "\\"+ CSV_EXT + "\\");
 			
-			assertTrue(csvFilePath.contains(CSV_FOLDER));			
+			assertTrue(csvFilePath.contains(CSV_EXT));			
 			cnt++;
 		}
 
@@ -52,11 +50,36 @@ public class GenerateXmlView extends BaseMirTest {
 	}
 
 	
+//	@Test
+	public void readMirMetadata() throws IOException {
+		
+		final File metadataCollectionFolder = new File(
+				BASE_FILE_PATH + TEST_COLLECTION + "/" + METADATA_FOLDER);
+		List<String> collectionFiles = getMirUtils().listFilesForFolder(metadataCollectionFolder);
+
+		log.info(collectionFiles.get(0));
+		
+		assertTrue(collectionFiles.size() > 0);
+		
+		List<String> titleList = getMirUtils().readMetadataFieldFromJson(
+				collectionFiles, TITLE);
+		
+		List<String> licenseList = getMirUtils().readMetadataFieldFromJson(
+				collectionFiles, LICENSE);
+						
+		log.info("Successfully loaded MIR-API metadata.");
+		
+		assertTrue(collectionFiles.size() == titleList.size());
+		assertTrue(collectionFiles.size() == licenseList.size());
+		
+	}
+	
+	
 	@Test
 	public void generateMirXmlView() throws IOException {
 		
 		final File inputCollectionFolder = new File(
-				BASE_FILE_PATH + TEST_COLLECTION + "/" + ANALYSIS_FOLDER + "/" + CSV_FOLDER);
+				BASE_FILE_PATH + TEST_COLLECTION + "/" + ANALYSIS_FOLDER + "/" + CSV_EXT);
 		List<String> collectionFiles = getMirUtils().listFilesForFolder(inputCollectionFolder);
 
 		log.info(collectionFiles.get(0));
@@ -68,10 +91,11 @@ public class GenerateXmlView extends BaseMirTest {
 		for (String csvFilePath : collectionFiles) {
 			
 			List<MirEntity> mirEntityList = getMirUtils().readMirEntityWithScoresFromCsv(
-					csvFilePath, BASE_FILE_PATH + EUROPEANA_ID_INDEXES_FILE);
+					csvFilePath, BASE_FILE_PATH + EUROPEANA_ID_INDEXES_FILE
+					, ANALYSIS_FOLDER + "\\" + CSV_EXT, METADATA_FOLDER);
 			
 			boolean storeRes = getMirUtils().storeMirEntityInXml(
-					mirEntityList, csvFilePath.replace(CSV_FOLDER, XML_FOLDER));
+					mirEntityList, csvFilePath.replace(CSV_EXT, XML_EXT));
 			
 			assertTrue(storeRes == true);
 			

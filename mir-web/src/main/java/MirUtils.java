@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,26 +17,19 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 import org.apache.log4j.Logger;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 /**
  * This is a helper class for MIR-API.
  * 
  * @author GrafR
  *
  */
-public class MirUtils {
+public class MirUtils extends MirConst {
 
 
-	/**
-	 * This is a limit for similarity score numbers. 
-	 * We take lowest values starting from 0.0.
-	 */
-	final int MAX_SCORES_NUMBER = 200;
-
-	final String lineBreak = "\n"; 
-	final String tab = "\t"; 
-	final String pathSeparator = "\\\\";
-	final String PATH_ID_DELIMETER = "/";
-	
 	protected Logger log = Logger.getLogger(getClass());	
 
 	
@@ -113,14 +107,17 @@ public class MirUtils {
     
     
 	/**
-	 * This method reads scores from extracted CSV file and creates
-	 * Mir entities.
+	 * This method reads scores from extracted CSV file, metadata from related JSON file 
+	 * and creates Mir entities.
 	 * 
 	 * @param csvFilePath
 	 * @param indexFilePath
+	 * @param csvFolder
+	 * @param metadataFolder
 	 * @return list of Mir entities
 	 */
-	public List<MirEntity> readMirEntityWithScoresFromCsv(String csvFilePath, String indexFilePath) {
+	public List<MirEntity> readMirEntityWithScoresFromCsv(
+			String csvFilePath, String indexFilePath, String csvFolder, String metadataFolder) {
 		
 		final int NUMBERS_AFTER_COMMA = 4;
 		
@@ -176,7 +173,14 @@ public class MirUtils {
 			
 			MirEntity mirEntity = new MirEntity();
 			
-			String[] items = csvFilePath.split(pathSeparator);
+			String metadataFilePath = csvFilePath.
+					replace("." + CSV_EXT, "." + JSON_EXT).
+					replace(csvFolder, metadataFolder);
+			
+			String sdocTitle = getJsonFieldValueFromFile(metadataFilePath, TITLE);
+			String sdocLicense = getJsonFieldValueFromFile(metadataFilePath, LICENSE);
+			
+			String[] items = csvFilePath.split(PATH_PARSING_DELIMITER);
 			String collectionId = items[items.length - COLLECTION_ID_POS];
 			String docId = items[items.length - QDOC_ID_POS].replace(".csv", "");
 			String qdocId = PATH_ID_DELIMETER + collectionId + PATH_ID_DELIMETER + docId;
@@ -185,6 +189,8 @@ public class MirUtils {
 			String recordId = qdocId + sdocId;
 			mirEntity.setRecordId(recordId);
 			mirEntity.setSdocScore(score);
+			mirEntity.setSdocTitle(sdocTitle);
+			mirEntity.setSdocLicense(sdocLicense);
 			mirEntityList.add(mirEntity);
 			log.info("added " + cnt + " Mir entity: " + mirEntity);
 			cnt++;
@@ -208,20 +214,26 @@ public class MirUtils {
 		File recordFile = FileUtils.getFile(xmlPath);
 
 		StringBuilder row = new StringBuilder();
-		row.append("<add>").append(lineBreak);
+		row.append("<add>").append(LINE_BREAK);
 		for (MirEntity mirEntity: mirEntityList) {
-			row.append(tab).append("<doc>").append(lineBreak);
-			row.append(tab).append(tab).append("<field name=\"record_id\">")
-				.append(mirEntity.getRecordId()).append("</field>").append(lineBreak);
-			row.append(tab).append(tab).append("<field name=\"qdoc_id\">")
-				.append(mirEntity.getQdocId()).append("</field>").append(lineBreak);
-			row.append(tab).append(tab).append("<field name=\"sdoc_id\">")
-				.append(mirEntity.getSdocId()).append("</field>").append(lineBreak);
-			row.append(tab).append(tab).append("<field name=\"sdoc_score\">")
-				.append(Float.toString(mirEntity.getSdocScore())).append("</field>").append(lineBreak);
-			row.append(tab).append("</doc>").append(lineBreak);
+			row.append(TAB).append("<doc>").append(LINE_BREAK);
+			row.append(TAB).append(TAB).append("<field name=\"record_id\">")
+				.append(mirEntity.getRecordId()).append("</field>").append(LINE_BREAK);
+			row.append(TAB).append(TAB).append("<field name=\"qdoc_id\">")
+				.append(mirEntity.getQdocId()).append("</field>").append(LINE_BREAK);
+			row.append(TAB).append(TAB).append("<field name=\"sdoc_id\">")
+				.append(mirEntity.getSdocId()).append("</field>").append(LINE_BREAK);
+			row.append(TAB).append(TAB).append("<field name=\"sdoc_score\">")
+				.append(Float.toString(mirEntity.getSdocScore())).append("</field>").append(LINE_BREAK);
+			row.append(TAB).append(TAB).append("<field name=\"sdoc_title\">")
+				.append(mirEntity.getSdocTitle()).append("</field>").append(LINE_BREAK);
+			row.append(TAB).append(TAB).append("<field name=\"sdoc_license\">")
+				.append(mirEntity.getSdocLicense()).append("</field>").append(LINE_BREAK);
+			row.append(TAB).append(TAB).append("<field name=\"sdoc_license_group\">")
+				.append("").append("</field>").append(LINE_BREAK);
+			row.append(TAB).append("</doc>").append(LINE_BREAK);
 		}
-		row.append("</add>").append(lineBreak);
+		row.append("</add>").append(LINE_BREAK);
 		
 		try {
 			String doc = row.toString();
@@ -251,7 +263,7 @@ public class MirUtils {
 
 	        GZIPInputStream gzis = new GZIPInputStream(new FileInputStream(filePath));
 	        csvFilePath = filePath.replace(".gz", "");
-			String[] pathElems = csvFilePath.split(pathSeparator);
+			String[] pathElems = csvFilePath.split(PATH_PARSING_DELIMITER);
 			String recordName = pathElems[pathElems.length - 1];
 			csvFilePath = csvFilePath.replace(recordName, csvPath + recordName);
 
@@ -278,5 +290,49 @@ public class MirUtils {
 	    return csvFilePath;
 	}
 	
+	
+	/**
+	 * This method extracts given field from a JSON file.
+	 * @param inputPathCollection
+	 * @param fieldName
+	 * @return list of field values
+	 */
+	public List<String> readMetadataFieldFromJson(List<String> inputPathCollection, String fieldName) {
 
+		List<String> res = new ArrayList<String>();
+		
+		for (String jsonFilePath : inputPathCollection) {
+			String value = getJsonFieldValueFromFile(jsonFilePath, fieldName);
+			res.add(value);
+		}
+		
+		return res;		
+	}
+
+	
+	/**
+	 * This method reads a given field from JSON file to String.
+	 * @param fileName
+	 * @param fieldName The name of a field in JSON object
+	 * @return The value of the given field
+	 * @throws Throwable
+	 */
+	public String getJsonFieldValueFromFile(String fileName, String fieldName) {
+		
+		String res = "";
+		
+        JsonObject jsonObject = new JsonObject();
+        
+        try {
+            JsonParser parser = new JsonParser();
+            JsonElement jsonElement = parser.parse(new FileReader(fileName));
+            jsonObject = jsonElement.getAsJsonObject();
+            res = jsonObject.get(fieldName).getAsString();
+		} catch (Exception ex) {
+			log.info("File: " + fileName + " has no value for field: " + fieldName + ". " + ex.getMessage());
+		}
+		return res;
+	}
+
+	
 }
