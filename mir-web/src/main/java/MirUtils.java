@@ -35,7 +35,29 @@ public class MirUtils extends MirConst {
 	
 	
 	/**
-	 * Read collection.
+	 * Read collection directories.
+	 * @param folder
+	 * @return
+	 */
+	public List<String> listDirsForFolder(final File folder) {
+		
+		List<String> collectionDirs = new ArrayList<String>();
+		
+	    for (final File fileEntry : folder.listFiles()) {
+	        if (fileEntry.isDirectory()) {
+	        	if (!fileEntry.getPath().startsWith(".git"))
+	        		collectionDirs.add(fileEntry.getPath());
+	        }
+	    }
+	    
+	    return collectionDirs;
+	}
+	
+	
+	/**
+	 * Read collection files.
+	 * @param folder
+	 * @return
 	 */
 	public List<String> listFilesForFolder(final File folder) {
 		

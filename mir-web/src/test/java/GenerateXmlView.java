@@ -75,7 +75,7 @@ public class GenerateXmlView extends BaseMirTest {
 	}
 	
 	
-	@Test
+//	@Test
 	public void generateMirXmlView() throws IOException {
 		
 		final File inputCollectionFolder = new File(
@@ -104,5 +104,65 @@ public class GenerateXmlView extends BaseMirTest {
 
 		log.info("Successfully generated " + cnt + " MIR-API items.");
 	}
+
+	
+	@Test
+	public void fullMirXmlGeneration() throws IOException {
+		
+		final File rootFolder = new File(GENERATED_PATH);
+		List<String> collectionDirs = getMirUtils().listDirsForFolder(rootFolder);
+
+		for (String collectionDirPath : collectionDirs) {
+			
+			final File inputCollectionFolder = new File(collectionDirPath);
+			List<String> collectionFiles = getMirUtils().listFilesForFolder(inputCollectionFolder);
+	
+			log.info(collectionFiles.get(0));
+			
+			assertTrue(collectionFiles.size() > 0);
+			
+			int cnt = 0;
+			
+			for (String gzFilePath : collectionFiles) {
+				
+				String csvFilePath = getMirUtils().extractItemFromPackage(
+						gzFilePath, ANALYSIS_FOLDER + "\\"+ CSV_EXT + "\\");
+				
+				assertTrue(csvFilePath.contains(CSV_EXT));			
+				cnt++;
+			}
+	
+			log.info("Successfully extracted " + cnt + " MIR-API CSV files for collection: " + collectionDirPath);
+	
+			
+			
+			final File analysisCollectionFolder = new File(
+					collectionDirPath + "/" + ANALYSIS_FOLDER + "/" + CSV_EXT);
+			List<String> analysisCollectionFiles = getMirUtils().listFilesForFolder(analysisCollectionFolder);
+	
+			log.info(analysisCollectionFiles.get(0));
+			
+			assertTrue(analysisCollectionFiles.size() > 0);
+			
+			int cntAnalysis = 0;
+			
+			for (String csvFilePath : analysisCollectionFiles) {
+				
+				List<MirEntity> mirEntityList = getMirUtils().readMirEntityWithScoresFromCsv(
+						csvFilePath, BASE_FILE_PATH + EUROPEANA_ID_INDEXES_FILE
+						, ANALYSIS_FOLDER + "\\" + CSV_EXT, METADATA_FOLDER);
+				
+				boolean storeRes = getMirUtils().storeMirEntityInXml(
+						mirEntityList, csvFilePath.replace(CSV_EXT, XML_EXT));
+				
+				assertTrue(storeRes == true);
+				
+				cntAnalysis++;
+			}
+	
+			log.info("Successfully generated " + cntAnalysis + " MIR-API items for collection: " + collectionDirPath);
+		}
+	}
+	
 	
 }
