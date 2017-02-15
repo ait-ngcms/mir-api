@@ -10,7 +10,7 @@
 	<parent>
 		<artifactId>mir-api</artifactId>
 		<groupId>eu.europeana.mir</groupId>
-		 <version>0.0.1-SNAPSHOT</version>
+		 <version>${version.mirApiSnapshot}</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
@@ -19,51 +19,42 @@
 		<!-- mir projects -->
 		<dependency>
 			<groupId>eu.europeana.mir</groupId>
-			<artifactId>mir-mongo</artifactId>
-			<version>${version.mirApiSnapshot}</version>
-		</dependency>
-		<dependency>
-			<groupId>eu.europeana.mir</groupId>
 			<artifactId>mir-solr</artifactId>
 			<version>${version.mirApiSnapshot}</version>
 		</dependency>
 		
+		<dependency>
+			<groupId>eu.europeana.mir</groupId>
+			<artifactId>mir-definitions</artifactId>
+			<version>${version.mirApiSnapshot}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>eu.europeana.mir</groupId>
+			<artifactId>mir-common</artifactId>
+			<version>${version.mirApiSnapshot}</version>
+		</dependency>		
 		
 		<!-- spring -->
-		<!-- 
-		<dependency>
-		    <groupId>com.mangofactory</groupId>
-		    <artifactId>swagger-springmvc</artifactId>
-		    <version>1.0.1</version>
-		    <exclusions>
-		    	<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-webmvc</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-web</artifactId>
-				</exclusion>
-		    </exclusions>
-		</dependency>
-		
-		<dependency>
-		    <groupId>javax.ws.rs</groupId>
-		    <artifactId>javax.ws.rs-api</artifactId>
-		    <version>2.0-m01</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-xc</artifactId>
-			<version>1.9.9</version>
+<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.4.0</version>
 		</dependency>
 
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>
+			<version>2.0-m01</version>
+		</dependency>
+
+<!-- 
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<version>${version.servletJstl}</version>
 		</dependency>
+		 -->
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -73,31 +64,26 @@
 		</dependency>
 
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${version.junit}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
-			<version>${version.springCore}</version>
+			<version>${version.spring}</version>
+			
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>${version.springCore}</version>
+			<version>${version.spring}</version>
 		</dependency>
- 		
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-tx</artifactId>
-			<version>${version.springCore}</version>
+			<version>${version.spring}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-oxm</artifactId>
-			<version>${version.springCore}</version>
+			<version>${version.spring}</version>
 		</dependency>
 		
 		<dependency>
@@ -111,7 +97,22 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		 -->
+
+		<!--  io dependencies -->
+	  	<dependency>
+	  		<groupId>commons-io</groupId>
+	  		<artifactId>commons-io</artifactId>
+	  		<version>${version.commons.io}</version>
+	  		<scope>compile</scope>
+	  	</dependency>
+		
+		<!--  logging -->
+		<dependency>
+	  		<groupId>log4j</groupId>
+	  		<artifactId>log4j</artifactId>
+	  		<version>1.2.12</version>
+	  	</dependency>
+		
 		<!--
 	    <dependency>
 	        <groupId>org.codehaus.jettison</groupId>
@@ -119,17 +120,16 @@
 		    <version>1.1</version>
 	    </dependency>
 		-->
-
-		<!--
-	    <dependency>
-	        <groupId>com.google.code.gson</groupId>
-	        <artifactId>gson</artifactId>
-		    <version>2.3.1</version>
-	    </dependency>
-		-->
-	    
+		
 	    
 		<!--  test dependencies -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${version.junit}</version>
+			<scope>test</scope>
+		</dependency>
+		
 		<!--
 		<dependency>
 			<groupId>eu.europeana.mir</groupId>
@@ -139,29 +139,14 @@
 			<scope>test</scope>
 		</dependency>
 		-->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${version.springCore}</version>
-			<scope>test</scope>
-		</dependency>
+<!-- 		
 		<dependency>
 			<groupId>eu.europeana.api</groupId>
 			<artifactId>europeana-client</artifactId>
 			<version>0.2.0-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
-	  	<dependency>
-	  		<groupId>log4j</groupId>
-	  		<artifactId>log4j</artifactId>
-	  		<version>1.2.12</version>
-	  	</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.11</version>
-			<scope>test</scope>
-		</dependency>	  	
+ -->		  	
 	</dependencies>
 
 	<!-- configure source and output locations -->
