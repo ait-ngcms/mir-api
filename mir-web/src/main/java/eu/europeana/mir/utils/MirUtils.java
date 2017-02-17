@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -65,14 +66,15 @@ public class MirUtils extends MirConst {
 		
 		List<String> collectionFiles = new ArrayList<String>();
 		
-	    for (final File fileEntry : folder.listFiles()) {
-	        if (fileEntry.isDirectory()) {
-	            listFilesForFolder(fileEntry);
-	        } else {
-	        	collectionFiles.add(fileEntry.getPath());
-	        }
-	    }
-	    
+		if (folder != null && new File(folder.getAbsolutePath()).exists()) {
+		    for (final File fileEntry : folder.listFiles()) {
+		        if (fileEntry.isDirectory()) {
+		            listFilesForFolder(fileEntry);
+		        } else {
+		        	collectionFiles.add(fileEntry.getPath());
+		        }
+		    }
+		}	    
 	    return collectionFiles;
 	}
 	
@@ -145,9 +147,6 @@ public class MirUtils extends MirConst {
 		
 		final int NUMBERS_AFTER_COMMA = 4;
 		
-		final int COLLECTION_ID_POS = 4;
-		final int QDOC_ID_POS = 1;
-		
 		List<BaseMirRecordImpl> mirImplList = new ArrayList<BaseMirRecordImpl>();
 
 		/**
@@ -197,21 +196,15 @@ public class MirUtils extends MirConst {
 			
 			BaseMirRecordImpl mirImpl = new BaseMirRecordImpl();
 			
-//			String metadataFilePath = csvFilePath.
-//					replace("." + CSV_EXT, "." + JSON_EXT).
-//					replace(csvFolder, metadataFolder);
-
 			String metadataFilePath = metadataFolder + sdocId + "." + JSON_EXT;
 			
-			String sdocTitle = "";
-					getJsonFieldValueFromFile(metadataFilePath, TITLE);
-			String sdocLicense = ""; 
-					getJsonFieldValueFromFile(metadataFilePath, LICENSE);
+			String sdocTitle = getJsonFieldValueFromFile(metadataFilePath, TITLE);
+			String sdocLicense = getJsonFieldValueFromFile(metadataFilePath, LICENSE);
 			
-			String[] items = csvFilePath.split(PATH_PARSING_DELIMITER);
-			String collectionId = items[items.length - COLLECTION_ID_POS];
-			String docId = items[items.length - QDOC_ID_POS].replace(".csv", "");
-			String qdocId = PATH_ID_DELIMETER + collectionId + PATH_ID_DELIMETER + docId;
+			int csvFolderPos = csvFilePath.indexOf(csvFolder);
+			String qdocId = csvFilePath.substring(csvFolderPos + csvFolder.length() + 1)
+					.replace(".csv", "").replace(BACK_SLASH, PATH_ID_DELIMETER);
+
 			mirImpl.setQdocId(qdocId);
 			mirImpl.setSdocId(sdocId);
 			String recordId = qdocId + sdocId;
@@ -255,9 +248,9 @@ public class MirUtils extends MirConst {
 				.append(Float.toString(mirImpl.getSdocScore())).append("</field>").append(LINE_BREAK);
 			row.append(TAB).append(TAB).append("<field name=\"sdoc_title\">")
 				.append(mirImpl.getSdocTitle()).append("</field>").append(LINE_BREAK);
-			row.append(TAB).append(TAB).append("<field name=\"sdoc_licence\">")
+			row.append(TAB).append(TAB).append("<field name=\"sdoc_license\">")
 				.append(mirImpl.getSdocLicense()).append("</field>").append(LINE_BREAK);
-			row.append(TAB).append(TAB).append("<field name=\"sdoc_licence_group\">")
+			row.append(TAB).append(TAB).append("<field name=\"sdoc_license_group\">")
 				.append("").append("</field>").append(LINE_BREAK);
 			row.append(TAB).append("</doc>").append(LINE_BREAK);
 		}
@@ -276,12 +269,28 @@ public class MirUtils extends MirConst {
 
 	
 	/**
+	 * This method converts input path in similar output path by
+	 * replacing current analysis folder.
+	 * @param filePath
+	 * @param inputFolder
+	 * @param outputFolder
+	 * @return analysis path
+	 */
+	public String getNextFolder(String filePath, String inputFolder, String outputFolder) {
+		if (filePath.contains("." + GZ_EXT))
+			filePath = filePath.replace("." + GZ_EXT, "");
+		return filePath.replace(inputFolder, outputFolder);		
+	}
+	
+	
+	/**
 	 * This method extracts data from GZ package and stores it separately.
 	 * @param filePath
-	 * @param csvPath
+	 * @param gzFolder
+	 * @param csvFolder
 	 * @return
 	 */
-	public String extractItemFromPackage(String filePath, String csvPath) {
+	public String extractItemFromPackage(String filePath, String gzFolder, String csvFolder) {
 
 		String csvFilePath = "";
 		
@@ -290,11 +299,7 @@ public class MirUtils extends MirConst {
 	    try{
 
 	        GZIPInputStream gzis = new GZIPInputStream(new FileInputStream(filePath));
-	        csvFilePath = filePath.replace(".gz", "");
-			String[] pathElems = csvFilePath.split(PATH_PARSING_DELIMITER);
-			String recordName = pathElems[pathElems.length - 1];
-			csvFilePath = csvFilePath.replace(recordName, csvPath + recordName);
-
+			csvFilePath = getNextFolder(filePath, gzFolder, csvFolder);
 	        
 	        File csvFile = new File(csvFilePath);
 	        csvFile.getParentFile().mkdirs(); // create directories if not exists
@@ -351,22 +356,39 @@ public class MirUtils extends MirConst {
 	
 		try {
 			ObjectMapper mapper = new ObjectMapper();
-	//		Map<String,Object> metadata = mapper.readValue(new File(fileName), Map.class);
 		    JsonNode rootNode = mapper.readTree(new File(fileName));
-			res = rootNode.get(fieldName).textValue();		
-		
-//        JsonObject jsonObject = new JsonObject();
-        
-//        try {
-//            JsonParser parser = new JsonParser();
-//            JsonElement jsonElement = parser.parse(new FileReader(fileName));
-//            jsonObject = jsonElement.getAsJsonObject();
-//            res = jsonObject.get(fieldName).getAsString();
+		    JsonNode fieldArray = rootNode.get(fieldName);	
+		    Iterator<JsonNode> itr = fieldArray.elements();
+		    while (itr.hasNext()) {
+		    	res = itr.next().textValue();
+		    	break;
+		    }		
 		} catch (Exception ex) {
 			log.info("File: " + fileName + " has no value for field: " + fieldName + ". " + ex.getMessage());
 		}
 		return res;
 	}
 
+
+	/**
+	 * This method validates whether data in folder already exist 
+	 * based on input path and folder in this path.
+	 * @param collectionDirPath
+	 * @param inputFolder
+	 * @param outputFolder
+	 * @return false if folder is not empty
+	 */
+	public boolean isFolderEmpty(String collectionDirPath, String inputFolder, String outputFolder) {
+		
+		boolean res = true;
+		
+		String nextFolder = getNextFolder(collectionDirPath, inputFolder, outputFolder);
+        File nextFolderFile = new File(nextFolder);
+		List<String> collectionFiles = listFilesForFolder(nextFolderFile);
+		if (collectionFiles.size() > 0)
+			res = false;
+        
+		return res;
+	}
 	
 }

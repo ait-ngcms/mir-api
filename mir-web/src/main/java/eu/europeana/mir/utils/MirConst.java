@@ -19,6 +19,7 @@ public class MirConst {
 	/**
 	 * Formats
 	 */
+	protected String GZ_EXT = "gz";
 	protected String CSV_EXT = "csv";
 	protected String XML_EXT = "xml";
 	protected String JSON_EXT = "json";
@@ -31,5 +32,6 @@ public class MirConst {
 	protected final String TAB = "\t"; 
 	protected final String PATH_PARSING_DELIMITER = "\\\\";
 	protected final String PATH_ID_DELIMETER = "/";
+	protected final String BACK_SLASH = "\\";	
 	
 }

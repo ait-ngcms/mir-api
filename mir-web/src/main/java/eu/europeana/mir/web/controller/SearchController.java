@@ -29,7 +29,6 @@ public class SearchController extends BaseRest {
 	@Resource 
 	MirService mirService;
 	
-//	@SuppressWarnings("unchecked")
 	@ApiOperation(value = "Search MIR documents for the given text query.", nickname = "searchSimilar", response = java.lang.Void.class)
 	@RequestMapping(value = {"/mir/search"}, method = RequestMethod.GET, 
 		produces = {HttpHeaders.CONTENT_TYPE_JSON_UTF8})
@@ -58,32 +57,4 @@ public class SearchController extends BaseRest {
 			
 	}
 	
-	/**
-	 * Get entity type string list from comma separated entities string.
-	 * @param commaSepMirTypes Comma separated entities string
-	 * @return Mir types string list
-	 * @throws ParamValidationException 
-	 */
-//	public MirTypes[] getMirTypesFromString(String commaSepMirTypes) throws ParamValidationException {
-//		
-//			String[] splittedMirTypes = commaSepMirTypes.split(",");
-//			MirTypes[] entityTypes = new MirTypes[splittedMirTypes.length];
-//			
-//			MirTypes entityType = null;
-//			String typeAsString;
-//			
-//			for (int i = 0; i < splittedMirTypes.length; i++) {
-//				typeAsString = splittedMirTypes[i].trim();
-//				entityType = MirTypes.getByInternalType(typeAsString);
-//				
-//				if(entityType == null)
-//					throw new ParamValidationException("Invalid request parameter value! ", WebMirConstants.QUERY_PARAM_TYPE, typeAsString);
-//				
-//				entityTypes[i] = entityType;
-//				
-//			}
-//			
-//			return entityTypes;
-//	}
-//		
 }

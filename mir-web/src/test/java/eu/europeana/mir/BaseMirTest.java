@@ -17,6 +17,7 @@
 
 package eu.europeana.mir;
 
+import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 
@@ -31,10 +32,17 @@ import eu.europeana.mir.utils.MirUtils;
  */
 public abstract class BaseMirTest extends MirConst {
 
-	protected String BASE_FILE_PATH  = "./src/test/resources/";
-	protected String GENERATED_PATH  = BASE_FILE_PATH + "generated/solr/";
+	protected String BASE_FILE_PATH        = "./src/test/resources/";
+	protected String GENERATED_PATH        = BASE_FILE_PATH + "generated/solr/";
+	protected String METADATA_FOLDER       = GENERATED_PATH + "metadata";
+	protected String DISTANCES_GZ_FOLDER   = "distances-gz";
+	protected String DISTANCES_CSV_FOLDER  = "distances-csv";
+	protected String MIR_XML_FOLDER        = "mir-xml";
 
+	final String EUROPEANA_ID_INDEXES_FILE = "indexes_for_distance_resultfiles.csv";
 	
+	protected Logger log = Logger.getLogger(getClass());	
+		
 	private MirUtils mirUtils = null;
 
     
