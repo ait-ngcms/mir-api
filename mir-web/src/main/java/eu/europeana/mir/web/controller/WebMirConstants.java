@@ -8,6 +8,8 @@ public interface WebMirConstants extends WebMirFields{
 	String PATH_PARAM_TYPE = "type";
 	String PARAM_DEFAULT_ROWS = "10";
 	String QUERY_PARAM_QDOC_ID = "qdoc_id";
+	String QUERY_PARAM_TEXT = "text";
+	String QUERY_PARAM_LICENSE = "license";
 	String QUERY_PARAM_ROWS = "rows";
 	String QUERY_PARAM_START = "start";
 		
