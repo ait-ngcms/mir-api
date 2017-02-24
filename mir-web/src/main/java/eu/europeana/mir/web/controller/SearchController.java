@@ -1,5 +1,6 @@
 package eu.europeana.mir.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -77,9 +78,9 @@ public class SearchController extends BaseRest {
 	@RequestMapping(value = {"/mir/search_by_text_and_license"}, method = RequestMethod.GET, 
 		produces = {HttpHeaders.CONTENT_TYPE_JSON_UTF8})
 	public ResponseEntity<String> searchByTextAndLicense(
-			@RequestParam(value = WebMirConstants.QUERY_PARAM_QDOC_ID) String qDocId,
 			@RequestParam(value = WebMirConstants.QUERY_PARAM_TEXT) String text,
-			@RequestParam(value = WebMirConstants.QUERY_PARAM_LICENSE) String license,
+			@RequestParam(value = WebMirConstants.QUERY_PARAM_QDOC_ID, required = false) String qDocId,
+			@RequestParam(value = WebMirConstants.QUERY_PARAM_LICENSE, required = false) String license,
 			@RequestParam(value = WebMirConstants.QUERY_PARAM_START, defaultValue = "0") String start,
 			@RequestParam(value = WebMirConstants.QUERY_PARAM_ROWS, defaultValue = WebMirConstants.PARAM_DEFAULT_ROWS) String rows
 			) throws HttpException  {
@@ -88,8 +89,9 @@ public class SearchController extends BaseRest {
 			
 			//validate qdoc ID
 			if(StringUtils.isEmpty(qDocId))
-				throw new ParamValidationException(
-						"Invalid request parameter value! ", WebMirConstants.QUERY_PARAM_QDOC_ID, qDocId);
+				qDocId = "";
+//				throw new ParamValidationException(
+//						"Invalid request parameter value! ", WebMirConstants.QUERY_PARAM_QDOC_ID, qDocId);
 			
 			//validate and convert text
 			if(StringUtils.isEmpty(text))
@@ -97,11 +99,13 @@ public class SearchController extends BaseRest {
 						"Invalid request parameter value! ", WebMirConstants.QUERY_PARAM_TEXT, text);
 			
 			//validate and convert licenses
-			if(StringUtils.isEmpty(license))
-				throw new ParamValidationException("Invalid request parameter value! "
-						, WebMirConstants.QUERY_PARAM_LICENSE, license);
+//			if(StringUtils.isEmpty(license))
+//				throw new ParamValidationException("Invalid request parameter value! "
+//						, WebMirConstants.QUERY_PARAM_LICENSE, license);
 			
-			List<String> licenseList = getLicensesFromString(license);
+			List<String> licenseList = new ArrayList<String>();
+			if(StringUtils.isNotEmpty(license))
+				licenseList = getLicensesFromString(license);
 			
 			ResultSet<? extends MirRecordView> results = mirService.searchByTextAndLicense(
 					qDocId, text, licenseList, start, rows);
