@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema name="entity" version="0.1">
+    <types>
+        <fieldType name="int" class="solr.TrieIntField" precisionStep="0" positionIncrementGap="0"/>
+        <fieldType name="float" class="solr.TrieFloatField" precisionStep="0"
+            positionIncrementGap="0"/>
+        <fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0"/>
+        <fieldType name="double" class="solr.TrieDoubleField" precisionStep="0"
+            positionIncrementGap="0"/> 
+        <fieldType name="string" class="solr.StrField" sortMissingLast="true" omitNorms="true"/>
+        <fieldType name="boolean" class="solr.BoolField" sortMissingLast="true" omitNorms="true"/>
+        <fieldType name="date" class="solr.TrieDateField" omitNorms="true" precisionStep="0"
+            positionIncrementGap="0"/>
+        
+        <fieldType name="suggestType" class="solr.TextField" positionIncrementGap="100">
+            <analyzer>
+                <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="[^a-zA-Z0-9]" replacement=" " />
+                <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+                <filter class="solr.LowerCaseFilterFactory"/>
+            </analyzer>
+        </fieldType>
+        <fieldType name="text" class="solr.TextField" positionIncrementGap="100">
+            <analyzer type="index">
+                <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt"
+                    enablePositionIncrements="true"/>
+                <filter class="solr.ASCIIFoldingFilterFactory"/>
+                <filter class="solr.LowerCaseFilterFactory"/>
+                <filter class="solr.KStemFilterFactory"/>
+            </analyzer>
+            <analyzer type="query">
+                <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+                <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true"
+                    expand="true"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt"
+                    enablePositionIncrements="true"/>
+                <filter class="solr.ASCIIFoldingFilterFactory"/>
+                <filter class="solr.LowerCaseFilterFactory"/>
+                <filter class="solr.KStemFilterFactory"/>
+            </analyzer>
+            
+        </fieldType>
+    </types>
+    <fields>
+        <!-- required field -->
+        <field name="_version_" type="long" indexed="true" stored="true" multiValued="false"/>
+        
+        <!-- unique key -->
+        <field name="record_id" type="string" indexed="true" required="true" multiValued="false"
+            stored="true"/>
+
+		<field name="qdoc_id" type="string" indexed="true" required="true" multiValued="false"
+            stored="true"/>
+
+        <field name="sdoc_id" type="string" indexed="true" required="true" multiValued="false"
+            stored="true"/>
+        
+		<field name="sdoc_score" type="float" indexed="true" required="true" multiValued="false"
+            stored="true"/>
+                
+        <field name="sdoc_title" type="text" indexed="true" stored="true" multiValued="false"/>
+		
+		<field name="sdoc_license" type="string" indexed="true" multiValued="false"
+            stored="true"/>
+			
+		<field name="sdoc_license_group" type="string" indexed="true" multiValued="false"
+            stored="true"/>
+		
+    </fields>
+    <uniqueKey>record_id</uniqueKey>
+    <defaultSearchField>sdoc_title</defaultSearchField>
+	<solrQueryParser defaultOperator="AND"/>
+    <!-- COPYFIELDS --> 
+   
+</schema>
