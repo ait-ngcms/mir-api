@@ -24,6 +24,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import eu.europeana.mir.model.BaseMirRecordImpl;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
+
 /**
  * This is a helper class for MIR-API.
  * 
@@ -202,7 +205,7 @@ public class MirUtils extends MirConst {
 			String sdocLicense = getJsonFieldValueFromFile(metadataFilePath, LICENSE);
 			
 			int csvFolderPos = csvFilePath.indexOf(csvFolder);
-			String qdocId = csvFilePath.substring(csvFolderPos + csvFolder.length() + 1)
+			String qdocId = csvFilePath.substring(csvFolderPos + csvFolder.length())
 					.replace(".csv", "").replace(BACK_SLASH, PATH_ID_DELIMETER);
 
 			mirImpl.setQdocId(qdocId);
@@ -246,8 +249,15 @@ public class MirUtils extends MirConst {
 				.append(mirImpl.getSdocId()).append("</field>").append(LINE_BREAK);
 			row.append(TAB).append(TAB).append("<field name=\"sdoc_score\">")
 				.append(Float.toString(mirImpl.getSdocScore())).append("</field>").append(LINE_BREAK);
+			
+			if (mirImpl.getSdocTitle().contains("Death")) {
+//				if (mirImpl.getSdocTitle().contains("Death") || mirImpl.getQdocId().contains("data_sounds_http___epth_sfm_gr_card_aspx_mid_100_")) {
+				int ii = 0;
+			}
+			String escapedXml = StringEscapeUtils.escapeXml(mirImpl.getSdocTitle());
 			row.append(TAB).append(TAB).append("<field name=\"sdoc_title\">")
-				.append(mirImpl.getSdocTitle()).append("</field>").append(LINE_BREAK);
+				.append(escapedXml).append("</field>").append(LINE_BREAK);
+//			.append(mirImpl.getSdocTitle()).append("</field>").append(LINE_BREAK);
 			row.append(TAB).append(TAB).append("<field name=\"sdoc_license\">")
 				.append(mirImpl.getSdocLicense()).append("</field>").append(LINE_BREAK);
 			row.append(TAB).append(TAB).append("<field name=\"sdoc_license_group\">")
