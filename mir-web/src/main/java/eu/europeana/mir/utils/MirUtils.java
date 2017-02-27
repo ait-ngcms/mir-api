@@ -13,18 +13,20 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
+import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import eu.europeana.mir.model.BaseMirRecordImpl;
-
-import org.apache.commons.lang.StringEscapeUtils;
 
 
 /**
@@ -250,14 +252,9 @@ public class MirUtils extends MirConst {
 			row.append(TAB).append(TAB).append("<field name=\"sdoc_score\">")
 				.append(Float.toString(mirImpl.getSdocScore())).append("</field>").append(LINE_BREAK);
 			
-			if (mirImpl.getSdocTitle().contains("Death")) {
-//				if (mirImpl.getSdocTitle().contains("Death") || mirImpl.getQdocId().contains("data_sounds_http___epth_sfm_gr_card_aspx_mid_100_")) {
-				int ii = 0;
-			}
 			String escapedXml = StringEscapeUtils.escapeXml(mirImpl.getSdocTitle());
 			row.append(TAB).append(TAB).append("<field name=\"sdoc_title\">")
 				.append(escapedXml).append("</field>").append(LINE_BREAK);
-//			.append(mirImpl.getSdocTitle()).append("</field>").append(LINE_BREAK);
 			row.append(TAB).append(TAB).append("<field name=\"sdoc_license\">")
 				.append(mirImpl.getSdocLicense()).append("</field>").append(LINE_BREAK);
 			row.append(TAB).append(TAB).append("<field name=\"sdoc_license_group\">")
@@ -401,4 +398,39 @@ public class MirUtils extends MirConst {
 		return res;
 	}
 	
+	
+	/**
+	 * This method extracts string from content between passed prefix and ending.
+	 * @param content string
+	 * @param prefix
+	 * @param ending
+	 * @return resulting string
+	 */
+	public static String extractStringBetweenPrefixAndEnding(String content, String prefix, String ending) {
+		String res = "";
+		if (StringUtils.isNotEmpty(content) && content.contains(prefix) && content.contains(ending)) {
+			Pattern pattern = Pattern.compile(prefix + "(.*?)" + ending);
+			Matcher matcher = pattern.matcher(content);
+			if (matcher.find()) {
+			    res = matcher.group(1);
+			}		
+		}
+		return res;
+	}
+	
+	
+	public String getParsedXmlFieldValue(String filePath, String fieldName) {
+		
+		String res = "";
+		
+	    File file = new File(filePath);
+		try {
+			String content = FileUtils.readFileToString(file);
+		    res = extractStringBetweenPrefixAndEnding(content, fieldName + "\">" , "</field");
+		} catch (IOException e) {
+	    	log.error("Error by parsing XML document. " + e.getMessage());
+		}
+	    
+	    return res;
+	}
 }

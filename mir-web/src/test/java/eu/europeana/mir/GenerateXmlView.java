@@ -31,7 +31,7 @@ public class GenerateXmlView extends BaseMirTest {
 	@Test
 	public void fullMirXmlGeneration() throws IOException {
 		
-		final File rootFolder = new File(GENERATED_PATH + DISTANCES_GZ_FOLDER);
+		final File rootFolder = new File(REMOTE_GENERATED_PATH + DISTANCES_GZ_FOLDER);
 		List<String> collectionDirs = getMirUtils().listDirsForFolder(rootFolder);
 
 		for (String collectionDirPath : collectionDirs) {
@@ -74,8 +74,8 @@ public class GenerateXmlView extends BaseMirTest {
 				for (String csvFilePath : analysisCollectionFiles) {
 					
 					List<BaseMirRecordImpl> mirEntityList = getMirUtils().readMirImplWithScoresFromCsv(
-							csvFilePath, BASE_FILE_PATH + EUROPEANA_ID_INDEXES_FILE
-							, DISTANCES_CSV_FOLDER, METADATA_FOLDER);
+							csvFilePath, REMOTE_GENERATED_PATH + EUROPEANA_ID_INDEXES_FILE
+							, DISTANCES_CSV_FOLDER, REMOTE_METADATA_FOLDER);
 					
 					String xmlFilePath = getMirUtils().getNextFolder(
 							csvFilePath, DISTANCES_CSV_FOLDER, MIR_XML_FOLDER);

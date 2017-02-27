@@ -38,7 +38,14 @@ public abstract class BaseMirTest extends MirConst {
 	protected String DISTANCES_GZ_FOLDER   = "distances-gz";
 	protected String DISTANCES_CSV_FOLDER  = "distances-csv";
 	protected String MIR_XML_FOLDER        = "mir-xml";
+	protected String MIR_XML_TEST_FOLDER   = "mir-xml-test";
 
+	protected String REMOTE_BASE_FILE_PATH  = "E:\\";
+	protected String REMOTE_GENERATED_PATH  = REMOTE_BASE_FILE_PATH + "generated/solr/";
+	protected String REMOTE_METADATA_FOLDER = REMOTE_GENERATED_PATH + "metadata";
+	
+	protected String TEST_COLLECTION        = "2059206";
+		
 	final String EUROPEANA_ID_INDEXES_FILE = "indexes_for_distance_resultfiles.csv";
 	
 	protected Logger log = Logger.getLogger(getClass());	

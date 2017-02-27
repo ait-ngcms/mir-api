@@ -9,9 +9,15 @@ import java.util.List;
 import org.junit.Test;
 
 import eu.europeana.mir.model.BaseMirRecordImpl;
+import eu.europeana.mir.utils.MirConst;
+import eu.europeana.mir.vocabulary.WebMirFields;
 
 public class GenerateXmlDocumentFromCsv extends BaseMirTest {
 
+	String sdocId = "data_sounds_http___epth_sfm_gr_card_aspx_mid_100_";
+	String testFieldName = "sdoc_title";
+	String expectedEncodedXmlResult = "&#922;&#945;&#955;&#945;&#956;&#945;&#964;&#953;&#945;&#957;&#972;&#962;";
+	
 	/**
 	 * MirRecord [recordId=/2059206/data_sounds_http
 	 * ___epth_sfm_gr_card_aspx_mid_100_/2059206/data_sounds_http___epth_sfm_gr_card_aspx_mid_100_, 
@@ -30,15 +36,19 @@ public class GenerateXmlDocumentFromCsv extends BaseMirTest {
 		
 		BaseMirRecordImpl mirImpl = new BaseMirRecordImpl();
 		
-		String metadataFilePath = metadataFolder + sdocId + "." + JSON_EXT;
+		String metadataFilePath = REMOTE_METADATA_FOLDER + "/" + TEST_COLLECTION + "/" + sdocId + "." + JSON_EXT;
+		String csvFilePath = REMOTE_GENERATED_PATH + DISTANCES_CSV_FOLDER + "/" + TEST_COLLECTION + "/" + sdocId + "." + CSV_EXT;
+		String xmlFilePath = REMOTE_GENERATED_PATH + MIR_XML_TEST_FOLDER + "/" + TEST_COLLECTION + "/" + sdocId + "." + XML_EXT;
 		
-		String sdocTitle = getJsonFieldValueFromFile(metadataFilePath, TITLE);
-		String sdocLicense = getJsonFieldValueFromFile(metadataFilePath, LICENSE);
+		String sdocTitle = getMirUtils().getJsonFieldValueFromFile(metadataFilePath, TITLE);
+		String sdocLicense = getMirUtils().getJsonFieldValueFromFile(metadataFilePath, LICENSE);
 		
-		int csvFolderPos = csvFilePath.indexOf(csvFolder);
-		String qdocId = csvFilePath.substring(csvFolderPos + csvFolder.length())
+		int csvFolderPos = csvFilePath.indexOf(DISTANCES_CSV_FOLDER);
+		String qdocId = csvFilePath.substring(csvFolderPos + DISTANCES_CSV_FOLDER.length())
 				.replace(".csv", "").replace(BACK_SLASH, PATH_ID_DELIMETER);
 
+		sdocId = "/" + TEST_COLLECTION + "/" + sdocId;
+		float score = 0;
 		mirImpl.setQdocId(qdocId);
 		mirImpl.setSdocId(sdocId);
 		String recordId = qdocId + sdocId;
@@ -52,6 +62,10 @@ public class GenerateXmlDocumentFromCsv extends BaseMirTest {
 				mirEntityList, xmlFilePath);
 		
 		assertTrue(storeRes == true);
+		
+		String resTitleValue = getMirUtils().getParsedXmlFieldValue(
+				xmlFilePath, testFieldName);
+		assertTrue(expectedEncodedXmlResult.equals(resTitleValue));
 		
 	}
 }
