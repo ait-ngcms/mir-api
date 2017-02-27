@@ -1,5 +1,6 @@
 package eu.europeana.mir.solr.service.impl;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -31,51 +32,7 @@ public class SolrMirServiceImpl extends BaseMirService implements SolrMirService
 
 	public ResultSet<? extends MirRecordView> search(String qdocId, String start, String rows) {
  
-		ResultSet<? extends MirRecordView> res = null;
-
-		String msg = qdocId + "' and start: '" + start + "' and rows: '" + rows + "'.";
-		getLogger().debug("search by qdoc ID: '" + msg);
-		
-		/**
-		 * Validate QDOC ID
-		 */
-		String prefix = "";
-		String ending = "";
-		if (!qdocId.startsWith(MirSolrFields.QUOTE)) prefix = MirSolrFields.QUOTE;
-		if (!qdocId.endsWith(MirSolrFields.QUOTE)) ending = MirSolrFields.QUOTE;
-		String mirQuery = MirSolrFields.QDOC_ID + ":" + prefix + qdocId + ending;
-
-		/**
-	     * Construct a SolrQuery 
-	     */
-	    SolrQuery query = new SolrQuery(mirQuery);
-	    try {
-	    	if (StringUtils.isNotEmpty(start)) 
-	    		query.setStart(Integer.parseInt(start));
-	    	if (StringUtils.isNotEmpty(rows))
-	    		query.setRows(Integer.parseInt(rows));
-		} catch (Exception e) {
-			throw new MirRetrievalException(
-					"Unexpected exception occured when searching MIR documents for qdoc ID: " + qdocId, e);
-        }
-		log.info("limited query: " + query.toString());	    
-	    
-	    /**
-	     * Query the server 
-	     */
-	    try {
-	    	QueryResponse rsp =  solrServer.query( query );
-			log.info("query response: " + rsp.toString());
-			res = buildResultSet(qdocId, rsp);
-			getLogger().debug("search obj res size: " + res.getResultSize());
-		} catch (SolrServerException e) {
-			throw new MirRetrievalException(
-					"Unexpected exception occured when searching MIR documents for solr query: "
-							+ query.toString(),
-					e);
-        }
-	    
-	    return res;
+		return searchByTextAndLicense(qdocId, "*", null, start, rows);  
 	}
 
 	public Logger getLogger() {
@@ -95,32 +52,22 @@ public class SolrMirServiceImpl extends BaseMirService implements SolrMirService
 		ResultSet<? extends MirRecordView> res = null;
 
 		String msg = qdocId + "' and text: '" + text + 
-				"' and license: '" + licenseList.toString() + 
+				"' and license: '" + Arrays.asList(licenseList) + 
 				"' and start: '" + start + "' and rows: '" + rows + "'.";
 		
 		getLogger().debug("search by qdoc ID: '" + msg);
 		
-		/**
-		 * Validate QDOC ID
-		 */
-		String prefix = "";
-		String ending = "";
-		if (!qdocId.startsWith(MirSolrFields.QUOTE)) prefix = MirSolrFields.QUOTE;
-		if (!qdocId.endsWith(MirSolrFields.QUOTE)) ending = MirSolrFields.QUOTE;
-
-    	qdocId = prefix + qdocId + ending;
-    	String mirQuery = text;
-
-		/**
+    	/**
 	     * Construct a SolrQuery 
 	     */
-	    SolrQuery query = new SolrQuery(mirQuery);
+	    SolrQuery query = new SolrQuery(text);
     	if (StringUtils.isNotEmpty(qdocId)) {
+    		qdocId = appendQuotes(qdocId);
     		query.addFilterQuery(MirSolrFields.QDOC_ID + ":" + 
     				qdocId);
     	}
     	
-	    if (licenseList.size() > 0) {
+	    if (licenseList!= null && licenseList.size() > 0) {
 		    for (String license : licenseList) {
 		    	query.addFilterQuery(MirSolrFields.SDOC_LICENSE + ":" + 
 		    			license);
@@ -153,6 +100,12 @@ public class SolrMirServiceImpl extends BaseMirService implements SolrMirService
         }
 	    
 	    return res;
+	}
+
+	private String appendQuotes(String qdocId) {
+		if (!qdocId.startsWith(MirSolrFields.QUOTE))
+			qdocId = MirSolrFields.QUOTE + qdocId + MirSolrFields.QUOTE;
+		return qdocId;
 	}
 
 }
