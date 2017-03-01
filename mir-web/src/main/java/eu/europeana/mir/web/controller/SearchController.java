@@ -40,8 +40,8 @@ public class SearchController extends BaseRest {
 	@Resource 
 	MirService mirService;
 	
-	@ApiOperation(value = "Search MIR documents for the given qdoc ID.", nickname = "searchSimilar", response = java.lang.Void.class)
-	@RequestMapping(value = {"/mir/search"}, method = RequestMethod.GET, 
+	@ApiOperation(value = "Search MIR documents for the given qdoc ID.", nickname = "searchById", response = java.lang.Void.class)
+	@RequestMapping(value = {"/mir/searchById"}, method = RequestMethod.GET, 
 		produces = {HttpHeaders.CONTENT_TYPE_JSON_UTF8})
 	public ResponseEntity<String> searchSimilar(
 			@RequestParam(value = WebMirConstants.QUERY_PARAM_QDOC_ID) String qDocId,
@@ -74,8 +74,8 @@ public class SearchController extends BaseRest {
 	}
 	
 
-	@ApiOperation(value = "Search MIR documents for the given qdoc ID, text and license query.", nickname = "searchByTextAndLicense", response = java.lang.Void.class)
-	@RequestMapping(value = {"/mir/search_by_text_and_license"}, method = RequestMethod.GET, 
+	@ApiOperation(value = "Search MIR documents for the given qdoc ID, text and license query.", nickname = "search", response = java.lang.Void.class)
+	@RequestMapping(value = {"/mir/search"}, method = RequestMethod.GET, 
 		produces = {HttpHeaders.CONTENT_TYPE_JSON_UTF8})
 	public ResponseEntity<String> searchByTextAndLicense(
 			@RequestParam(value = WebMirConstants.QUERY_PARAM_TEXT) String text,

@@ -168,12 +168,18 @@ public class MirUtils extends MirConst {
 		try {
 			iterator = FileUtils.lineIterator(csvFile);
 			
+			String line;
+			String floatPartStr;
+			int pointPos;
+			int lastIndex;
+			String score;
+			float floatScore;
 			while (iterator.hasNext()) {
 				
-				String line = (String) iterator.next();
-				int pointPos = line.indexOf(".");
-				String floatPartStr = line.substring(pointPos + 1, line.length());
-				int lastIndex = pointPos + NUMBERS_AFTER_COMMA;
+				line = (String) iterator.next();
+				pointPos = line.indexOf(".");
+				floatPartStr = line.substring(pointPos + 1, line.length());
+				lastIndex = pointPos + NUMBERS_AFTER_COMMA;
 				
 				/**
 				 * Check case when float number has fewer numbers after comma 
@@ -182,8 +188,8 @@ public class MirUtils extends MirConst {
 				if (lastIndex > floatPartStr.length()) {
 					lastIndex = floatPartStr.length();
 				}
-				String score = line.substring(0, lastIndex);
-				float floatScore = Float.parseFloat(score);
+				score = line.substring(0, lastIndex);
+				floatScore = Float.parseFloat(score);
 				scoreMap.put(europeanaIdList.get(idx), floatScore);
 				idx++;
 			}
