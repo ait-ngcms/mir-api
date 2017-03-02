@@ -34,4 +34,12 @@ public class MirConst {
 	protected final String PATH_ID_DELIMETER = "/";
 	protected final String BACK_SLASH = "\\";	
 	
+	
+	/**
+	 * Folders
+	 */
+	protected String REMOTE_BASE_FILE_PATH  = "E:\\";
+	protected String REMOTE_GENERATED_PATH  = REMOTE_BASE_FILE_PATH + "generated/solr/";
+	protected String REMOTE_METADATA_FOLDER = REMOTE_GENERATED_PATH + "metadata";
+
 }

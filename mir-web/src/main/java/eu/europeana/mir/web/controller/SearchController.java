@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import eu.europeana.api.common.config.swagger.SwaggerSelect;
 import eu.europeana.mir.search.ResultSet;
@@ -57,7 +58,9 @@ public class SearchController extends BaseRest {
 						"Invalid request parameter value! ", WebMirConstants.QUERY_PARAM_QDOC_ID, qDocId);
 			
 			ResultSet<? extends MirRecordView> results = mirService.search(qDocId, start, rows);
-			String serialized = new ObjectMapper().writeValueAsString(results);
+			ObjectMapper objectMapper = new ObjectMapper();
+			String serialized = objectMapper.writeValueAsString(results);
+			
 			
 			return new ResponseEntity<>(serialized, HttpStatus.OK);
 
@@ -81,6 +84,7 @@ public class SearchController extends BaseRest {
 			@RequestParam(value = WebMirConstants.QUERY_PARAM_TEXT) String text,
 			@RequestParam(value = WebMirConstants.QUERY_PARAM_QDOC_ID, required = false) String qDocId,
 			@RequestParam(value = WebMirConstants.QUERY_PARAM_LICENSE, required = false) String license,
+			@RequestParam(value = WebMirConstants.QUERY_PARAM_PROFILE, defaultValue = "MINIMAL", required = false) WebMirConstants.Profiles profile,
 			@RequestParam(value = WebMirConstants.QUERY_PARAM_START, defaultValue = "0") String start,
 			@RequestParam(value = WebMirConstants.QUERY_PARAM_ROWS, defaultValue = WebMirConstants.PARAM_DEFAULT_ROWS) String rows
 			) throws HttpException  {
@@ -103,12 +107,26 @@ public class SearchController extends BaseRest {
 //				throw new ParamValidationException("Invalid request parameter value! "
 //						, WebMirConstants.QUERY_PARAM_LICENSE, license);
 			
+			//validate and convert profile
+			if(profile == null)
+				profile = WebMirConstants.Profiles.MINIMAL;
+
 			List<String> licenseList = new ArrayList<String>();
 			if(StringUtils.isNotEmpty(license))
 				licenseList = getLicensesFromString(license);
 			
 			ResultSet<? extends MirRecordView> results = mirService.searchByTextAndLicense(
 					qDocId, text, licenseList, start, rows);
+			
+			if (profile == WebMirConstants.Profiles.FULL) {
+				List<? extends MirRecordView> resultList = results.getResults();
+				String metadata;
+				for (MirRecordView result : resultList) {
+					metadata = mirService.getMetadataJsonContent(result.getSdocId());
+					result.setMetadata(metadata);
+				}
+			}
+			
 			String serialized = new ObjectMapper().writeValueAsString(results);
 			
 			return new ResponseEntity<>(serialized, HttpStatus.OK);

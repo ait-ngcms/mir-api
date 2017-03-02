@@ -10,6 +10,7 @@ public interface WebMirConstants extends WebMirFields{
 	String QUERY_PARAM_QDOC_ID = "qdoc_id";
 	String QUERY_PARAM_TEXT = "text";
 	String QUERY_PARAM_LICENSE = "license";
+	String QUERY_PARAM_PROFILE = "profile";
 	String QUERY_PARAM_ROWS = "rows";
 	String QUERY_PARAM_START = "start";
 		
@@ -26,5 +27,11 @@ public interface WebMirConstants extends WebMirFields{
 	 * PARAMS
 	 */
 	public static final String PARAM_INCLUDE_ERROR_STACK = "includeErrorStack";
+	
+	
+	public enum Profiles {
+		  MINIMAL
+		, FULL; 
+	}
 	
 }

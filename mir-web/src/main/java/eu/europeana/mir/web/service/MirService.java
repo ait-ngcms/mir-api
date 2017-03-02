@@ -47,4 +47,12 @@ public interface MirService {
 			, String rows
 			)  throws HttpException;
 
+	
+	/**
+	 * This method retrieves metadata JSON content.
+	 * @param sdocId
+	 * @return JSON string
+	 */
+	public String getMetadataJsonContent(String sdocId);
+	
 }

@@ -1,7 +1,5 @@
 package eu.europeana.mir.web.model.view;
 
-import eu.europeana.mir.vocabulary.MirTypes;
-
 public interface MirRecordView {
 
 	//functional fields
@@ -14,6 +12,10 @@ public interface MirRecordView {
 	void setSdocId(String sdocId);
 
 	public String getSdocId();
+	
+	public String getMetadata(); 
+	
+	public void setMetadata(String metadata);
 	
 //	void setMatchedTerm(String matchedTerm);
 //

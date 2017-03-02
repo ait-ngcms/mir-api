@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import eu.europeana.mir.search.ResultSet;
 import eu.europeana.mir.solr.exception.MirRetrievalException;
 import eu.europeana.mir.solr.service.SolrMirService;
+import eu.europeana.mir.utils.MirUtils;
 import eu.europeana.mir.web.exception.HttpException;
 import eu.europeana.mir.web.model.view.MirRecordView;
 import eu.europeana.mir.web.service.MirService;
@@ -61,6 +62,13 @@ public class MirServiceImpl implements MirService {
 			throw new HttpException("No MIR document found for QDOC ID: " + qdocId, HttpStatus.NOT_FOUND);
 		
 		return result;
+	}
+
+
+	@Override
+	public String getMetadataJsonContent(String sdocId) {
+		
+		return (new MirUtils()).getMetadataJsonContent(sdocId);
 	}
 	
 }

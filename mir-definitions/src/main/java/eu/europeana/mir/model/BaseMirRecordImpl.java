@@ -21,6 +21,7 @@ package eu.europeana.mir.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonRawValue;
 
 @JsonInclude(Include.NON_NULL)
 @JsonIgnoreProperties({ "recordId", "qdocId" })
@@ -33,6 +34,7 @@ public class BaseMirRecordImpl  implements Comparable<BaseMirRecordImpl>, MirRec
 	private String sdocTitle;
 	private String sdocLicense;
 	private String sdocLicenseGroup;
+	private String metadata;
 
 	/* (non-Javadoc)
 	 * @see eu.europeana.mir.Mir#getRecordId()
@@ -133,6 +135,13 @@ public class BaseMirRecordImpl  implements Comparable<BaseMirRecordImpl>, MirRec
 		this.sdocLicenseGroup = sdocLicenseGroup;
 	}
 	
+	 @JsonRawValue
+	public String getMetadata() {
+		return metadata;
+	}
+	public void setMetadata(String metadata) {
+		this.metadata = metadata;
+	}
 	
 	@Override
 	public int hashCode() {
