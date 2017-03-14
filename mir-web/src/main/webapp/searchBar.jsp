@@ -19,110 +19,119 @@
 
 <script type="text/javascript">
 	
-	var contactTable;
+	//var contactTable;
+	var maxRows = 5;
+	var maxColumns = 4;
+	var maxCells = maxRows*maxColumns;
 	var dataSet = [];
+
 	
+	function showMirRecord(mirRecord) {
+		//var x = 1;
+		//var y = 4;
+		var rows = [];
+		var cells = [];
+		//var characters = 'ABCDEFGHIJKLMNOPQRSTUVXYZ';
+		//for (var i = 0, l = x * y; i < l; i++) {
+		    //letter = characters.charAt(Math.random() * characters.length);
+	    cells.push('<td>' + mirRecord.sdocTitle + '</td>');
+	    //if (i !== 0 && (i + 1) % x === 0) {
+	      rows.push('<tr>' + cells.join('') + '</tr>');
+	      cells = [];
+	    cells.push('<td>' + mirRecord.sdocId + '</td>');
+	      rows.push('<tr>' + cells.join('') + '</tr>');
+	      cells = [];
+	    cells.push('<td>' + mirRecord.sdocScore + '</td>');
+	    //if (i !== 0 && (i + 1) % x === 0) {
+	      rows.push('<tr>' + cells.join('') + '</tr>');
+	      cells = [];
+		    cells.push('<td><a href=\"' + mirRecord.metadata.guid + '\">guid</a></td>');
+//		    cells.push('<td>' + mirRecord.metadata.guid + '</td>');
+		    //if (i !== 0 && (i + 1) % x === 0) {
+		      rows.push('<tr>' + cells.join('') + '</tr>');
+		      cells = [];
+		    //}
+		//}
+		var res = "<div><table>" +  rows.join('') + "</div></table>"
+//	    return rows.join('');
+	    return res;
+	}
+	
+	
+	function createGrid(data) {
+		
+	    var rows = [];
+	    var cells = [];
+	   
+	    var i = 0;
+        for (var key in data) {
+//	    for (var i = 0, l = maxColumns * maxRows; i < l; i++) {
+	        //letter = characters.charAt(Math.random() * characters.length);
+	        //alert("data: " + data);
+	        var mirRecord = data[i];
+	        //alert("obj: " + obj);
+	        var row = [];
+            ///row.push(data[key].sdocId, data[key].sdocScore);    
+            row.push(showMirRecord(data[key]));
+            ///var row = showMirRecord(data[key]);
+            //row.push(mirRecord.sdocId, mirRecord.sdocScore);  	   
+            //row.push(mirRecord[sdocId], mirRecord[sdocScore]);  	                    
+	        cells.push('<td>' + row + '</td>');
+	        //cells.push('<td>' + mirRecord + '</td>');
+	        if (i !== 0 && (i + 1) % maxColumns === 0) {
+	            rows.push('<tr>' + cells.join('') + '</tr>');
+	            cells = [];
+	        }
+	        i++;
+	    }
+	    return rows.join('');
+	}
+
 	/*var dataSet = [
 	               [ "3.32", "/23/uri1" ],
 	               [ "5.45", "/15/uri2" ],
 	           ];
 	*/
-/*
-	$(document).ready(function() {
-	    contactTable = $('#datatable-responsive').DataTable( {
-	        data: dataSet,
-	        //processing: true,
-	        //serverSide: true,	        
-	        columns: [
-	            { title: "sdocId" },
-	            { title: "sdocScore" }
-	        ]
-	    } );
-	} );
-	*/
-	/*
-	$(document).ready(function () {
-	    alert("Init data table");
-	    
-	    contactTable = $('#datatable-responsive').DataTable({
-	        select: {
-	            style: 'one'
-	        },
-	        processing: true,
-	        serverSide: true,
-	        order: [[2, 'desc']],
-	        rowId: "id",
-	        ajax: {
-	            url: '/mir/search',
-	            type: 'GET'
-	        },
-	        //language: {
-	        //    url: languageUrl,
-	        //    select: selectTranslation()
-	        //},
-	        columns: [
-	            {
-	                data: null,
-	                render: function (data, type, full, meta) {
-	                    return '<input type="checkbox"/>';
-	                },
-	                sortable: false,
-	                searchable: false
-	            },
-	            {
-	                name: 'name',
-	                data: 'name',
-	                title: 'Instituție',
-	                searchable: true
-	                
-	            },
-	            {
-	                name: 'email',
-	                data: 'email',
-	                title: 'Email',
-	                searchable: true
-	            },
-	            {
-	                name: 'phone',
-	                data: 'phone',
-	                title: 'Telefon',
-	                searchable: true
-	            }
-	        ]
-	    });
-	});		
-*/
-
 
 	$(function(){
 	    $('#btn').click(function(qdocId) {
 	        //alert("Search button clicked.");
 	        
-	        var queryText = document.getElementById("imgUrl").value;
+	        var queryText = document.getElementById("mirRecord").value;
 	        
 	        $(document).ready(function () {
 		        //alert("Get request started");
    		        //alert("query text: " + queryText);
             	$.ajax({
                     url: '/mir/search',
-                    data: {'text':queryText},
+                    data: {'text':queryText, 'rows':maxCells, 'profile':"FULL"},
                     method: 'get'
                 }).done(function(data){
     		        //alert("Get request done");
+    		        $("#mirTable").html("");
+    		        
     		        if (data.results != null) {
 //        		        if (data.success=='true') {
         		        //alert("Get request success");
         		        //alert(data.results);
         		        ///dataSet = data.results;
+
+						var tbody = document.getElementById('mirTable');
+						tbody.insertAdjacentHTML('beforeend', createGrid(data.results));
+		
+/*        		        
         		        for (var key in data.results) {
         		        	var row = [];
                             row.push(data.results[key].sdocId, data.results[key].sdocScore);       		        
         		        	dataSet.push(row);
+    					    $("#mir-table").append("<tr><td>" + row + "</td></tr>");
         		        }
-        		        
+        		        */
         		        //contactTable = $('#datatable-responsive').DataTable();
         		        
-					    contactTable = $('#datatable-responsive').DataTable( {
+        		        
+    
+					    /*contactTable = $('#datatable-responsive').DataTable( {
 					        data: dataSet,
 					        //select: {
 					        //    style: 'one'
@@ -136,6 +145,8 @@
 					            { title: "sdocScore" }
 					        ]
 					    } );
+        		        */
+        		        
         		        
         		        //contactTable.data = dataSet;
                         //addSuccess('#error-messages', data.errorMsg);
@@ -200,7 +211,7 @@
 						<input type="text" name="value0" id="keywords" value="" size="50">
 						<input type="hidden" value="text" name="field0">
 						 -->
-						<input type="text" name="imgUrl" id="imgUrl" value="" size="50">
+						<input type="text" name="mirRecord" id="mirRecord" value="" size="50">
 						
 						</td>                   
 					    <td valign="top">
@@ -209,8 +220,13 @@
 						</td>
 						
 		                <div class="x_content">
-		                    <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap jambo_table bulk_action top_search" cellspacing="0" width="100%">
+							<table>
+							  <tbody id="mirTable">
+							  </tbody>
+							</table>		                
+<!--  		                    <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap jambo_table bulk_action top_search" cellspacing="0" width="100%">
 		                    </table>
+-->		                    
 						</div>
 						
 					    <!-- 
