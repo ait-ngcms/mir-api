@@ -30,9 +30,8 @@
     ">
    
    <!--  properties -->
-   <util:properties id="mirProperties" location="classpath:config/mir.properties" scope="singleton" />
-   
-    
+    <import resource="mir-common-context.xml" />
+	
    <!-- INTERNAL -->
 	<import resource="internal/mir-solr-server.xml" />
 	

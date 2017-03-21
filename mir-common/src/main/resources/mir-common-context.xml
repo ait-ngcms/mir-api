@@ -28,7 +28,7 @@
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
         ">
      
-     <util:properties id="entityProperties" 
+     <util:properties id="mirProperties" 
 		location="classpath:config/mir.properties" />
 		
     <!--  configuration bean -->

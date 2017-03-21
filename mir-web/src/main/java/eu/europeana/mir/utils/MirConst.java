@@ -38,7 +38,7 @@ public class MirConst {
 	/**
 	 * Folders
 	 */
-	protected String REMOTE_BASE_FILE_PATH  = "E:\\";
+	protected String REMOTE_BASE_FILE_PATH  = "F:\\";
 	protected String REMOTE_GENERATED_PATH  = REMOTE_BASE_FILE_PATH + "generated/solr/";
 	protected String REMOTE_METADATA_FOLDER = REMOTE_GENERATED_PATH + "metadata";
 
