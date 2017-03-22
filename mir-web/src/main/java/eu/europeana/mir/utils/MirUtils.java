@@ -441,11 +441,12 @@ public class MirUtils extends MirConst {
 	}
 	
 	
-	public String getMetadataJsonContent(String sdocId) {
+	public String getMetadataJsonContent(String sdocId, String dataUrl) {
 		
 		String res = "";
 		
-		String filePath = REMOTE_METADATA_FOLDER + sdocId + "." + JSON_EXT;
+		String filePath = dataUrl + sdocId + "." + JSON_EXT;
+//		String filePath = REMOTE_METADATA_FOLDER + sdocId + "." + JSON_EXT;
 	    File file = new File(filePath);
 		try {
 			String content = FileUtils.readFileToString(file);

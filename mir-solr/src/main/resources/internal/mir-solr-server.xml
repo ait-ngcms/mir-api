@@ -33,6 +33,7 @@
 		<property name="connectionTimeout" value="#{mirProperties['solr.mir.timeout']}"/>
 		<property name="defaultMaxConnectionsPerHost" value="64"/>
 		<property name="maxTotalConnections" value="125"/>
+		<!-- <property name="dataUrl" value="#{mirProperties['data.url']}"/> -->
 	</bean>
 	
 </beans>

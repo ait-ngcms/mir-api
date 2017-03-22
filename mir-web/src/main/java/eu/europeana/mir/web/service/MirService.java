@@ -51,8 +51,9 @@ public interface MirService {
 	/**
 	 * This method retrieves metadata JSON content.
 	 * @param sdocId
+	 * @param dataUrl
 	 * @return JSON string
 	 */
-	public String getMetadataJsonContent(String sdocId);
+	public String getMetadataJsonContent(String sdocId, String dataUrl);
 	
 }

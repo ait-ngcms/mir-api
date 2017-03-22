@@ -9,6 +9,9 @@ public interface MirConfiguration {
 	public static final String VALUE_ENVIRONMENT_TEST = "test";
 	public static final String VALUE_ENVIRONMENT_DEVELOPMENT = "development";
 	
+	public static final String DATA_URL = "data.url";
+
+	
 	public String getComponentName();
 	
 	
@@ -21,6 +24,12 @@ public interface MirConfiguration {
 	 * uses annotation.environment property
 	 */
 	public String getEnvironment();
+	
+	/**
+	 * uses data.url property
+	 * @return URL to the external hard drive containing experimental data
+	 */
+	public String getDataUrl();
 	
 	
 //	/**

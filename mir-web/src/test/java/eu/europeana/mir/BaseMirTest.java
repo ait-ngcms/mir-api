@@ -17,12 +17,20 @@
 
 package eu.europeana.mir;
 
+import javax.annotation.Resource;
+
 import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
-
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import eu.europeana.mir.config.MirConfigurationImpl;
 import eu.europeana.mir.utils.MirConst;
 import eu.europeana.mir.utils.MirUtils;
+import eu.europeana.mir.web.service.MirService;
+import eu.europeana.mir.web.service.impl.MirServiceImpl;
+
 
 /**
  * This class implements base methods for MIR-API testing.
@@ -30,6 +38,8 @@ import eu.europeana.mir.utils.MirUtils;
  * @author GrafR
  *
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration({ "/mir-web-context.xml", "/mir-common-context.xml" })
 public abstract class BaseMirTest extends MirConst {
 
 	protected String BASE_FILE_PATH        = "./src/test/resources/";
@@ -52,10 +62,23 @@ public abstract class BaseMirTest extends MirConst {
 		
 	private MirUtils mirUtils = null;
 
-    
+//	@Resource 
+//	MirService webMirService;
+	
+	
 	@Before
     public void setUp() throws Exception {
 		setMirUtils(new MirUtils());
+		
+/*		MirConfigurationImpl config = (MirConfigurationImpl) ((MirServiceImpl) webMirService).getConfiguration();
+//		MirConfigurationImpl config = new MirConfigurationImpl();
+		String dataUrl = config.getMirProperties().getProperty(MirConfigurationImpl.DATA_URL);
+		
+//		REMOTE_BASE_FILE_PATH = (new MirConfigurationImpl()).getDataUrl(); //MirConfigurationImpl.DATA_URL;
+		REMOTE_BASE_FILE_PATH = dataUrl; //MirConfigurationImpl.DATA_URL;
+		REMOTE_GENERATED_PATH  = REMOTE_BASE_FILE_PATH + "generated/solr/";
+		REMOTE_METADATA_FOLDER = REMOTE_GENERATED_PATH + "metadata";
+		*/
     }
 
     @After

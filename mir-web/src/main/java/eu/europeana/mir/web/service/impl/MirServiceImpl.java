@@ -66,9 +66,9 @@ public class MirServiceImpl implements MirService {
 
 
 	@Override
-	public String getMetadataJsonContent(String sdocId) {
+	public String getMetadataJsonContent(String sdocId, String dataUrl) {
 		
-		return (new MirUtils()).getMetadataJsonContent(sdocId);
+		return (new MirUtils()).getMetadataJsonContent(sdocId, dataUrl);
 	}
 	
 }

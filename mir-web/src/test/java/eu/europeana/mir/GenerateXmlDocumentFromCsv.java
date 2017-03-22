@@ -9,8 +9,8 @@ import java.util.List;
 import org.junit.Test;
 
 import eu.europeana.mir.model.BaseMirRecordImpl;
-import eu.europeana.mir.utils.MirConst;
-import eu.europeana.mir.vocabulary.WebMirFields;
+//import eu.europeana.mir.utils.MirConst;
+//import eu.europeana.mir.vocabulary.WebMirFields;
 
 public class GenerateXmlDocumentFromCsv extends BaseMirTest {
 

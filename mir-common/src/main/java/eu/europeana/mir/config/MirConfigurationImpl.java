@@ -13,16 +13,16 @@ public class MirConfigurationImpl implements MirConfiguration {
 
 //	@Override
 //	public boolean isIndexingEnabled() {
-//		String value = getAnnotationProperties().getProperty(ENTITY_INDEXING_ENABLED);
+//		String value = getMirProperties().getProperty(ENTITY_INDEXING_ENABLED);
 //		return Boolean.valueOf(value);
 //	}
 
-	public Properties getAnnotationProperties() {
+	public Properties getMirProperties() {
 		return mirProperties;
 	}
 
-	public void setAnnotationProperties(Properties annotationProperties) {
-		this.mirProperties = annotationProperties;
+	public void setMirProperties(Properties mirProperties) {
+		this.mirProperties = mirProperties;
 	}
 
 	@Override
@@ -32,7 +32,12 @@ public class MirConfigurationImpl implements MirConfiguration {
 
 	@Override
 	public String getEnvironment() {
-		return getAnnotationProperties().getProperty(ENTITY_ENVIRONMENT);
+		return getMirProperties().getProperty(ENTITY_ENVIRONMENT);
+	}
+
+	@Override
+	public String getDataUrl() {
+		return getMirProperties().getProperty(DATA_URL);
 	}
 
 }

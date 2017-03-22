@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import eu.europeana.api.common.config.swagger.SwaggerSelect;
 import eu.europeana.mir.search.ResultSet;
+import eu.europeana.mir.utils.MirConst;
 import eu.europeana.mir.web.exception.HttpException;
 import eu.europeana.mir.web.exception.InternalServerException;
 import eu.europeana.mir.web.exception.ParamValidationException;
@@ -119,10 +119,11 @@ public class SearchController extends BaseRest {
 					qDocId, text, licenseList, start, rows);
 			
 			if (profile == WebMirConstants.Profiles.FULL) {
+				String dataUrl = getConfiguration().getDataUrl() + MirConst.REMOTE_METADATA_FOLDER;
 				List<? extends MirRecordView> resultList = results.getResults();
 				String metadata;
 				for (MirRecordView result : resultList) {
-					metadata = mirService.getMetadataJsonContent(result.getSdocId());
+					metadata = mirService.getMetadataJsonContent(result.getSdocId(), dataUrl);
 					result.setMetadata(metadata);
 				}
 			}

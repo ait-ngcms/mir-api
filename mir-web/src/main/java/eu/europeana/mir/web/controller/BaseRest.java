@@ -3,18 +3,28 @@ package eu.europeana.mir.web.controller;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
 
+import eu.europeana.mir.config.MirConfiguration;
 import eu.europeana.mir.model.MirRecord;
 import eu.europeana.mir.web.exception.authentication.MirAuthenticationException;
 import eu.europeana.mir.web.model.MirSearchResults;
 
 public class BaseRest{
 
+	@Resource
+	MirConfiguration configuration;
+	
 	public BaseRest() {
 		super();
 	}
 
+	protected MirConfiguration getConfiguration() {
+		return configuration;
+	}
+	
 	protected void validateApiKey(String wsKey) throws MirAuthenticationException {
 		// throws exception if the wskey is not found
 	}
