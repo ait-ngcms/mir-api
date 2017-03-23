@@ -34,25 +34,25 @@
 		//var characters = 'ABCDEFGHIJKLMNOPQRSTUVXYZ';
 		//for (var i = 0, l = x * y; i < l; i++) {
 		    //letter = characters.charAt(Math.random() * characters.length);
-	    cells.push('<td>' + mirRecord.sdocTitle + '</td>');
+	    cells.push('<th class=\"elem-header\">' + mirRecord.sdocTitle + '</th>');
 	    //if (i !== 0 && (i + 1) % x === 0) {
 	      rows.push('<tr>' + cells.join('') + '</tr>');
 	      cells = [];
 	    cells.push('<td>' + mirRecord.sdocId + '</td>');
-	      rows.push('<tr>' + cells.join('') + '</tr>');
+	      rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
 	      cells = [];
 	    cells.push('<td>' + mirRecord.sdocScore + '</td>');
 	    //if (i !== 0 && (i + 1) % x === 0) {
-	      rows.push('<tr>' + cells.join('') + '</tr>');
+	      rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
 	      cells = [];
 		    cells.push('<td><a href=\"' + mirRecord.metadata.guid + '\">guid</a></td>');
 //		    cells.push('<td>' + mirRecord.metadata.guid + '</td>');
 		    //if (i !== 0 && (i + 1) % x === 0) {
-		      rows.push('<tr>' + cells.join('') + '</tr>');
+		      rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
 		      cells = [];
 		    //}
 		//}
-		var res = "<div><table>" +  rows.join('') + "</div></table>"
+		var res = "<div><table class=\"grid-elem\">" +  rows.join('') + "</div></table>"
 //	    return rows.join('');
 	    return res;
 	}

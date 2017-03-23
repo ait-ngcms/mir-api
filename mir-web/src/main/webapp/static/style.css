@@ -23,3 +23,7 @@ dt          { font-weight: normal; }
 .error      { background: #E8EFF0; padding: 3px 8px; color: #11557C;
               font-size: 0.9em; border-radius: 2px; }
 .urlinput   { width: 300px; }
+
+table {
+    border: 1px solid black;
+}
