@@ -19,7 +19,6 @@
 
 <script type="text/javascript">
 	
-	//var contactTable;
 	var maxRows = 5;
 	var maxColumns = 4;
 	var maxCells = maxRows*maxColumns;
@@ -27,33 +26,31 @@
 
 	
 	function showMirRecord(mirRecord) {
-		//var x = 1;
-		//var y = 4;
+
 		var rows = [];
+		
 		var cells = [];
-		//var characters = 'ABCDEFGHIJKLMNOPQRSTUVXYZ';
-		//for (var i = 0, l = x * y; i < l; i++) {
-		    //letter = characters.charAt(Math.random() * characters.length);
 	    cells.push('<th class=\"elem-header\">' + mirRecord.sdocTitle + '</th>');
-	    //if (i !== 0 && (i + 1) % x === 0) {
-	      rows.push('<tr>' + cells.join('') + '</tr>');
-	      cells = [];
+        rows.push('<tr>' + cells.join('') + '</tr>');
+	    
+        cells = [];
 	    cells.push('<td>' + mirRecord.sdocId + '</td>');
-	      rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
-	      cells = [];
+	    rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
+
+	    cells = [];
 	    cells.push('<td>' + mirRecord.sdocScore + '</td>');
-	    //if (i !== 0 && (i + 1) % x === 0) {
-	      rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
-	      cells = [];
-		    cells.push('<td><a href=\"' + mirRecord.metadata.guid + '\">guid</a></td>');
-//		    cells.push('<td>' + mirRecord.metadata.guid + '</td>');
-		    //if (i !== 0 && (i + 1) % x === 0) {
-		      rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
-		      cells = [];
-		    //}
-		//}
+        rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
+	    
+	    cells = [];
+	    cells.push('<td>' + mirRecord.sdocLicense + '</td>');
+        rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
+	    
+        cells = [];
+	    cells.push('<td><a href=\"' + mirRecord.metadata.guid + '\">guid</a></td>');
+        rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
+        
+	    cells = [];
 		var res = "<div><table class=\"grid-elem\">" +  rows.join('') + "</div></table>"
-//	    return rows.join('');
 	    return res;
 	}
 	
@@ -65,19 +62,11 @@
 	   
 	    var i = 0;
         for (var key in data) {
-//	    for (var i = 0, l = maxColumns * maxRows; i < l; i++) {
-	        //letter = characters.charAt(Math.random() * characters.length);
-	        //alert("data: " + data);
 	        var mirRecord = data[i];
 	        //alert("obj: " + obj);
 	        var row = [];
-            ///row.push(data[key].sdocId, data[key].sdocScore);    
             row.push(showMirRecord(data[key]));
-            ///var row = showMirRecord(data[key]);
-            //row.push(mirRecord.sdocId, mirRecord.sdocScore);  	   
-            //row.push(mirRecord[sdocId], mirRecord[sdocScore]);  	                    
 	        cells.push('<td>' + row + '</td>');
-	        //cells.push('<td>' + mirRecord + '</td>');
 	        if (i !== 0 && (i + 1) % maxColumns === 0) {
 	            rows.push('<tr>' + cells.join('') + '</tr>');
 	            cells = [];
@@ -87,11 +76,6 @@
 	    return rows.join('');
 	}
 
-	/*var dataSet = [
-	               [ "3.32", "/23/uri1" ],
-	               [ "5.45", "/15/uri2" ],
-	           ];
-	*/
 
 	$(function(){
 	    $('#btn').click(function(qdocId) {
@@ -100,8 +84,6 @@
 	        var queryText = document.getElementById("mirRecord").value;
 	        
 	        $(document).ready(function () {
-		        //alert("Get request started");
-   		        //alert("query text: " + queryText);
             	$.ajax({
                     url: '/mir/search',
                     data: {'text':queryText, 'rows':maxCells, 'profile':"FULL"},
@@ -114,51 +96,13 @@
 //        		        if (data.success=='true') {
         		        //alert("Get request success");
         		        //alert(data.results);
-        		        ///dataSet = data.results;
-
 						var tbody = document.getElementById('mirTable');
 						tbody.insertAdjacentHTML('beforeend', createGrid(data.results));
-		
-/*        		        
-        		        for (var key in data.results) {
-        		        	var row = [];
-                            row.push(data.results[key].sdocId, data.results[key].sdocScore);       		        
-        		        	dataSet.push(row);
-    					    $("#mir-table").append("<tr><td>" + row + "</td></tr>");
-        		        }
-        		        */
-        		        //contactTable = $('#datatable-responsive').DataTable();
-        		        
-        		        
-    
-					    /*contactTable = $('#datatable-responsive').DataTable( {
-					        data: dataSet,
-					        //select: {
-					        //    style: 'one'
-					        //},
-					        //order: [[2, 'desc']],
-					        //rowId: "id",					        
-					        //processing: true,
-					        //serverSide: true,	        
-					        columns: [
-					            { title: "sdocId" },
-					            { title: "sdocScore" }
-					        ]
-					    } );
-        		        */
-        		        
-        		        
-        		        //contactTable.data = dataSet;
-                        //addSuccess('#error-messages', data.errorMsg);
-                        ///contactTable.ajax.reload();
                     } else {
         		        alert("Get request error. " + data.errorMsg);
-                        //addError('#error-messages', data.errorMsg);
-                        //contactTable.ajax.reload();
                     }
                 }).fail(function(reason){
     		        alert("Get request failed");
-                    //addError('#error-messages', reason);
                     });		        
 	        }); // end of request function	        
 	    }); // end of click function
