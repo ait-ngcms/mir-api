@@ -63,8 +63,24 @@
 	    cells.push('<td><audio controls><source src=\"' + edmIsShownBy + '\" type=\"audio/mpeg\" autostart=\"false\"></audio></td>');
         rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
 	    
+	    cells = [];
+	    var imgLink = "";
+	    var edmPreview = "";
+	    var OLD_SYNTAX = "europeanastatic.eu/api/image?";
+	    var NEW_SYNTAX = "europeana.eu/api/v2/thumbnail-by-url.json?size=w400&";
+	    if (typeof(mirRecord.metadata.edmPreview) !== 'undefined' && mirRecord.metadata.edmPreview.length > 0) {
+	    	edmPreview = mirRecord.metadata.edmPreview[0];
+	    	edmPreview = edmPreview.replace(OLD_SYNTAX, NEW_SYNTAX);
+	    }
+	    imgLink = edmPreview;
+	    console.log("preview: " + edmPreview + ", isShownBy: " + edmIsShownBy);
+	    if (imgLink.length > 0) {
+	    	cells.push('<td><a href=\"' + imgLink + '\"><img border=\"0\" alt=\"Europeana image\" src=\"' + imgLink + '\" width=\"100\" height=\"100\"></a></td>');
+	    } 
+        rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
+	    
         cells = [];
-	    cells.push('<td><a href=\"' + mirRecord.metadata.guid + '\">guid</a></td>');
+	    cells.push('<td><a href=\"' + mirRecord.metadata.guid + '\">Europeana ID</a></td>');
         rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
         
 	    cells = [];
