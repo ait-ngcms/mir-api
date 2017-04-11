@@ -24,6 +24,8 @@
 	var maxCells = maxRows*maxColumns;
 	var dataSet = [];
 
+	var MAX_LENGTH = 200;
+	
 	
 	function showMirRecord(mirRecord) {
 
@@ -43,6 +45,14 @@
 	    
 	    cells = [];
 	    cells.push('<td>' + mirRecord.sdocLicense + '</td>');
+        rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
+	    
+	    cells = [];
+	    var description = "";
+	    if (typeof(mirRecord.metadata.dcDescription) !== 'undefined' && mirRecord.metadata.dcDescription.length > 0) {
+	    	description = mirRecord.metadata.dcDescription[0];
+	    }
+	    cells.push('<td>' + description.substring(0, MAX_LENGTH) + '</td>');
         rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
 	    
         cells = [];
