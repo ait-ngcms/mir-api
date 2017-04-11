@@ -55,6 +55,14 @@
 	    cells.push('<td>' + description.substring(0, MAX_LENGTH) + '</td>');
         rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
 	    
+	    cells = [];
+	    var edmIsShownBy = "";
+	    if (typeof(mirRecord.metadata.edmIsShownBy) !== 'undefined' && mirRecord.metadata.edmIsShownBy.length > 0) {
+	    	edmIsShownBy = mirRecord.metadata.edmIsShownBy[0];
+	    }
+	    cells.push('<td><audio controls><source src=\"' + edmIsShownBy + '\" type=\"audio/mpeg\" autostart=\"false\"></audio></td>');
+        rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
+	    
         cells = [];
 	    cells.push('<td><a href=\"' + mirRecord.metadata.guid + '\">guid</a></td>');
         rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
