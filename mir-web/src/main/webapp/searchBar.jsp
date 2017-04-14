@@ -71,6 +71,8 @@
 	    if (typeof(mirRecord.metadata.edmPreview) !== 'undefined' && mirRecord.metadata.edmPreview.length > 0) {
 	    	edmPreview = mirRecord.metadata.edmPreview[0];
 	    	edmPreview = edmPreview.replace(OLD_SYNTAX, NEW_SYNTAX);
+	    } else {
+	    	edmPreview = "http://www.europeana.eu/api/v2/thumbnail-by-url.json?size=w400&uri=missing&size=LARGE&type=SOUND";
 	    }
 	    imgLink = edmPreview;
 	    console.log("preview: " + edmPreview + ", isShownBy: " + edmIsShownBy);
