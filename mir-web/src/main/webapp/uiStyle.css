@@ -49,3 +49,30 @@ form     { margin: 0mm 0mm 0mm 0mm }
 }
 
 .elem-row:nth-child(even) {background-color: #f2f2f2}
+
+.search-input-block {
+	margin-left: 20px;
+	margin-right: 20px;
+	font: 20px;
+    border: 4px solid black;
+    padding: 20px 15px;
+    background-color:magenta;  
+    /*position: fixed;
+    width: 100%;
+    height: 20px;
+    left: 0%;
+    top: -10px;*/
+    /*position: absolute;
+	right: 1em;
+    top: 0;*/
+}
+
+.label-name {
+    font-size: 18px;
+    padding-right: 10px;
+}
+
+input {
+    padding-right: 20px;
+    margin-right: 20px;
+}
