@@ -27,42 +27,16 @@
 	var MAX_LENGTH = 200;
 	
 	
-	function showMirRecord(mirRecord) {
+	function showMirRecord(mirRecord, i) {
 
 		var rows = [];
 		
+        // title
 		var cells = [];
-	    cells.push('<th class=\"elem-header\">' + mirRecord.sdocTitle + '</th>');
+	    cells.push('<th class=\"elem-header\">' + '<b>' + "Title: " + '</b>' + mirRecord.sdocTitle + '</th>');
         rows.push('<tr>' + cells.join('') + '</tr>');
 	    
-        cells = [];
-	    cells.push('<td>' + mirRecord.sdocId + '</td>');
-	    rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
-
-	    cells = [];
-	    cells.push('<td>' + mirRecord.sdocScore + '</td>');
-        rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
-	    
-	    cells = [];
-	    cells.push('<td>' + mirRecord.sdocLicense + '</td>');
-        rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
-	    
-	    cells = [];
-	    var description = "";
-	    if (typeof(mirRecord.metadata.dcDescription) !== 'undefined' && mirRecord.metadata.dcDescription.length > 0) {
-	    	description = mirRecord.metadata.dcDescription[0];
-	    }
-	    cells.push('<td>' + description.substring(0, MAX_LENGTH) + '</td>');
-        rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
-	    
-	    cells = [];
-	    var edmIsShownBy = "";
-	    if (typeof(mirRecord.metadata.edmIsShownBy) !== 'undefined' && mirRecord.metadata.edmIsShownBy.length > 0) {
-	    	edmIsShownBy = mirRecord.metadata.edmIsShownBy[0];
-	    }
-	    cells.push('<td><audio controls><source src=\"' + edmIsShownBy + '\" type=\"audio/mpeg\" autostart=\"false\"></audio></td>');
-        rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
-	    
+		// picture
 	    cells = [];
 	    var imgLink = "";
 	    var edmPreview = "";
@@ -77,12 +51,49 @@
 	    imgLink = edmPreview;
 	    console.log("preview: " + edmPreview + ", isShownBy: " + edmIsShownBy);
 	    if (imgLink.length > 0) {
-	    	cells.push('<td><a href=\"' + imgLink + '\"><img border=\"0\" alt=\"Europeana image\" src=\"' + imgLink + '\" width=\"100\" height=\"100\"></a></td>');
+	    	cells.push('<td style=\"display:table-cell; vertical-align:middle; text-align:center\"><a href=\"' + imgLink + '\"><img border=\"0\" alt=\"Europeana image\" src=\"' + imgLink + '\" width=\"100\" height=\"100\"></a></td>');
 	    } 
         rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
+		
+		// audio
+		cells = [];
+	    var edmIsShownBy = "";
+	    if (typeof(mirRecord.metadata.edmIsShownBy) !== 'undefined' && mirRecord.metadata.edmIsShownBy.length > 0) {
+	    	edmIsShownBy = mirRecord.metadata.edmIsShownBy[0];
+	    }
+	    cells.push('<td><audio controls><source src=\"' + edmIsShownBy + '\" type=\"audio/mpeg\" autostart=\"false\"></audio></td>');
+        rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
 	    
+        // description
+	    cells = [];
+	    var description = "";
+	    if (typeof(mirRecord.metadata.dcDescription) !== 'undefined' && mirRecord.metadata.dcDescription.length > 0) {
+	    	description = mirRecord.metadata.dcDescription[0];
+	    }
+	    cells.push('<td>' + '<b>' + "Description: " + '</b>' + description.substring(0, MAX_LENGTH) + '</td>');
+        rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
+	    	
+        // sdocId
         cells = [];
-	    cells.push('<td><a href=\"' + mirRecord.metadata.guid + '\">Europeana ID</a></td>');
+	    cells.push('<td>' + '<b>' + "Sdoc ID: " + '</b>' + mirRecord.sdocId + '</td>');
+	    rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
+
+        // license
+	    cells = [];
+	    cells.push('<td>' + '<b>' + "License: " + '</b>' + mirRecord.sdocLicense + '</td>');
+        rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
+	    
+	    // score
+	    cells = [];
+	    cells.push('<td>' + '<b>' + "Score: " + '</b>' + mirRecord.sdocScore + '</td>');
+        rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
+	    
+        // Search similar link and Europeana link
+        cells = [];        
+	    cells.push('<td><input id=\"similarBtn' + i + '\" type=\"button\" value=\"Search similar\" onclick=\"callSearchSimilarFunction(\'' 
+	    	+ mirRecord.sdocTitle + '\',\'' + mirRecord.sdocId + '\',\'' + mirRecord.sdocLicense + '\')\" />' + 
+	    	'<input class=\"right-side-button\" type=\"button\" onclick=\"window.location.href=\'' + mirRecord.metadata.guid + 
+	    	'\';\" value=\"View Europeana\" style=\"float: right;\"/></td>');
         rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
         
 	    cells = [];
@@ -90,6 +101,49 @@
 	    return res;
 	}
 	
+	
+	function callSearchSimilarFunction(title, europeanaId, license) {
+
+        //alert("Similar button clicked.");
+        
+        document.getElementById('mirRecord').value = "*";
+        document.getElementById('similarTo').value = europeanaId;
+
+        executeSearchQuery();
+	}
+	
+	
+	function executeSearchQuery() {
+		
+        var queryText = document.getElementById("mirRecord").value;
+        var similarTo = document.getElementById("similarTo").value;
+        var license = document.getElementById("license").value;
+        
+        $(document).ready(function () {
+        	$.ajax({
+                url: '/mir/search',
+                data: {'text':queryText, 'qdoc_id':similarTo, 'license':license, 'rows':maxCells, 'profile':"FULL"},
+                method: 'get'
+            }).done(function(data){
+		        //alert("Get request done");
+		        $("#mirTable").html("");
+		        
+		        if (data.results != null) {
+//    		        if (data.success=='true') {
+    		        //alert("Get request success");
+    		        //alert(data.results);
+					var tbody = document.getElementById('mirTable');
+					tbody.insertAdjacentHTML('beforeend', createGrid(data.results));
+                } else {
+    		        alert("Get request error. " + data.errorMsg);
+                }
+            }).fail(function(reason){
+		        alert("Get request failed");
+                });		        
+        }); // end of request function	        
+
+	}
+        
 	
 	function createGrid(data) {
 		
@@ -101,7 +155,7 @@
 	        var mirRecord = data[i];
 	        //alert("obj: " + obj);
 	        var row = [];
-            row.push(showMirRecord(data[key]));
+            row.push(showMirRecord(data[key],i));
 	        cells.push('<td>' + row + '</td>');
 	        if (i !== 0 && (i + 1) % maxColumns === 0) {
 	            rows.push('<tr>' + cells.join('') + '</tr>');
@@ -116,13 +170,16 @@
 	$(function(){
 	    $('#btn').click(function(qdocId) {
 	        //alert("Search button clicked.");
-	        
+            executeSearchQuery();
+/*
 	        var queryText = document.getElementById("mirRecord").value;
+	        var similarTo = document.getElementById("similarTo").value;
+	        var license = document.getElementById("license").value;
 	        
 	        $(document).ready(function () {
             	$.ajax({
                     url: '/mir/search',
-                    data: {'text':queryText, 'rows':maxCells, 'profile':"FULL"},
+                    data: {'text':queryText, 'qdoc_id':similarTo, 'license':license, 'rows':maxCells, 'profile':"FULL"},
                     method: 'get'
                 }).done(function(data){
     		        //alert("Get request done");
@@ -141,49 +198,50 @@
     		        alert("Get request failed");
                     });		        
 	        }); // end of request function	        
+	        */
 	    }); // end of click function
 	});		
 
-
 </script>
+
 		
-		<table>
-			<tr>
-				<td>
-					<div style="display: none;" id="advSearch" align="center">
-						<img id="queryImage"
-							src="queryImg" alt="" height="64" align="middle">	
-					</div>					
-				</td>
-				<td colspan="3">
-				<form id="searchbar" method="GET" enctype="" name="form1" action="./Search" onsubmit="setFeatures();">
-					<input type="hidden" value="form" name="src">
-				
-				    <table cellspacing="1" cellpadding="1" border="0">                          
-					    <tr>    
-							<div class="input-fields">
-								<td valign="top" class="search-input-block">
-									<label class="label-name" for="text">Text:</label>
-									<input class="input-field" type="text" name="mirRecord" id="mirRecord" value="" size="50">
-									<label class="label-name" for="similarTo">Similar to:</label>
-									<input class="input-field" type="text" name="similarTo" id="similarTo" value="" size="50">
-									<label class="label-name" for="license">License:</label>
-									<input class="input-field" type="text" name="license" id="license" value="" size="50">
-									<input id="btn" type="button" value="Search" />									
-								</td>					 		
-							</div>														
-						</tr>
-						<tr>
-			                <div class="x_content">
-								<table>
-								  <tbody id="mirTable">
-								  </tbody>
-								</table>		                
-							</div>
-						</tr>
-				   </table>
-				   
-				</form>
-				</td>
-			</tr>
-		</table>
+<table>
+	<tr>
+		<td>
+			<div style="display: none;" id="advSearch" align="center">
+				<img id="queryImage"
+					src="queryImg" alt="" height="64" align="middle">	
+			</div>					
+		</td>
+		<td colspan="3">
+		<form id="searchbar" method="GET" enctype="" name="form1" action="./Search" onsubmit="setFeatures();">
+			<input type="hidden" value="form" name="src">
+		
+		    <table cellspacing="1" cellpadding="1" border="0" width="100%">                          
+			    <tr>    
+					<div class="input-fields">
+						<td valign="top" class="search-input-block">
+							<label class="label-name" for="text">Text:</label>
+							<input class="input-field" type="text" name="mirRecord" id="mirRecord" value="" size="50">
+							<label class="label-name" for="similarTo">Similar to:</label>
+							<input class="input-field" type="text" name="similarTo" id="similarTo" value="" size="50">
+							<label class="label-name" for="license">License:</label>
+							<input class="input-field" type="text" name="license" id="license" value="" size="50">
+							<input id="btn" type="button" value="Search" />									
+						</td>					 		
+					</div>														
+				</tr>
+				<tr>
+	                <div class="x_content">
+						<table>
+						  <tbody id="mirTable">
+						  </tbody>
+						</table>		                
+					</div>
+				</tr>
+		   </table>
+		   
+		</form>
+		</td>
+	</tr>
+</table>

@@ -91,7 +91,7 @@ public class SolrMirServiceImpl extends BaseMirService implements SolrMirService
 	    	QueryResponse rsp =  solrServer.query( query );
 			log.info("query response: " + rsp.toString());
 			res = buildResultSet(qdocId, rsp);
-			getLogger().debug("search obj res size: " + res.getResultSize());
+			getLogger().info("search obj res size: " + res.getResultSize());
 		} catch (SolrServerException e) {
 			throw new MirRetrievalException(
 					"Unexpected exception occured when searching MIR documents for solr query: "
