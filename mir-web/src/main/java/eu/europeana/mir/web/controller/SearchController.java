@@ -144,4 +144,40 @@ public class SearchController extends BaseRest {
 			
 	}
 	
+
+	@ApiOperation(value = "Search similar documents for the given text query using CDVS library.", nickname = "cdvssearch", response = java.lang.Void.class)
+	@RequestMapping(value = {"/mir/cdvssearch"}, method = RequestMethod.GET, 
+		produces = {HttpHeaders.CONTENT_TYPE_JSON_UTF8})
+	public ResponseEntity<String> searchByTextAndLicense(
+			@RequestParam(value = WebMirConstants.QUERY_PARAM_TEXT) String text,
+			@RequestParam(value = WebMirConstants.QUERY_PARAM_START, defaultValue = "0") String start,
+			@RequestParam(value = WebMirConstants.QUERY_PARAM_ROWS, defaultValue = WebMirConstants.PARAM_DEFAULT_ROWS) String rows
+			) throws HttpException  {
+
+		try {			
+			
+			//validate and convert text
+			if(StringUtils.isEmpty(text))
+				throw new ParamValidationException(
+						"Invalid request parameter value! ", WebMirConstants.QUERY_PARAM_TEXT, text);
+			
+			String results = mirService.searchCdvsByText(text, start, rows);
+			
+			//String serialized = new ObjectMapper().writeValueAsString(results);
+			
+//			return new ResponseEntity<>(serialized, HttpStatus.OK);
+			return new ResponseEntity<>(results, HttpStatus.OK);
+
+		} catch (RuntimeException e) {
+			//not found .. 
+			throw new InternalServerException(e);
+		} catch (HttpException e) {
+			//avoid wrapping http exception
+			throw e;
+		} catch (Exception e) {
+			throw new InternalServerException(e);
+		}
+			
+	}
+	
 }

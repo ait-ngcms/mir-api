@@ -49,6 +49,25 @@ public interface MirService {
 
 	
 	/**
+	 * This method retrieves Mir objects from REST interface usind CDVS library.
+	 * Example HTTP request for MIR object: 
+	 *     http://localhost:8080/mir/searchCdvsByText?text=green&start=0&rows=10
+	 * In background python script is executed e.g.
+	 * C:\cdvs>python C:\git\ait-ngcms\scoregraph\cdvs.py E:\app-test\testcollection -u all-test -q O_446.jpg
+	 * @param text
+	 * @param start
+	 * @param rows
+	 * @return response that comprises response body, headers and status code.
+	 * @throws IOException
+	 */
+	public String searchCdvsByText(
+			String text
+			, String start
+			, String rows
+			)  throws HttpException;
+
+	
+	/**
 	 * This method retrieves metadata JSON content.
 	 * @param sdocId
 	 * @param dataUrl

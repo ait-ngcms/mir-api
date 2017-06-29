@@ -139,9 +139,41 @@
                 }
             }).fail(function(reason){
 		        alert("Get request failed");
-                });		        
+            });		        
         }); // end of request function	        
 
+	}
+        
+	
+	function executeCdvsSearchQuery() {
+		
+        var queryText = document.getElementById("mirRecord").value;
+        
+        $(document).ready(function () {
+        	$.ajax({
+                url: '/mir/cdvssearch',
+                data: {'text':queryText},
+                method: 'get'
+            }).done(function(data){
+		        //alert("Get request done");
+		        $("#mirTable").html("");
+		        
+		        if (data != null) {
+//			        if (data.results != null) {
+//    		        if (data.success=='true') {
+    		        //alert("Get request success");
+    		        //alert(data.results);
+					var tbody = document.getElementById('mirTable');
+					//tbody.insertAdjacentHTML('beforeend', '<h1>Hello</h1>');
+					tbody.insertAdjacentHTML('beforeend', data);
+//					tbody.insertAdjacentHTML('beforeend', createGrid(data.results));
+                } else {
+    		        alert("Get request error. " + data.errorMsg);
+                }
+            }).fail(function(reason){
+		        alert("Get request failed");
+            });		        
+        }); // end of Cdvs request function	        
 	}
         
 	
@@ -200,6 +232,12 @@
 	        }); // end of request function	        
 	        */
 	    }); // end of click function
+
+	    $('#cdvs-btn').click(function(qdocId) {
+	        //alert("Search button clicked.");
+            executeCdvsSearchQuery();
+	    }); // end of CDVS click function
+	    
 	});		
 
 </script>
@@ -228,6 +266,7 @@
 							<label class="label-name" for="license">License:</label>
 							<input class="input-field" type="text" name="license" id="license" value="" size="50">
 							<input id="btn" type="button" value="Search" />									
+							<input id="cdvs-btn" type="button" value="CDVS Search" />									
 						</td>					 		
 					</div>														
 				</tr>
