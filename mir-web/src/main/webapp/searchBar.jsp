@@ -102,6 +102,49 @@
 	}
 	
 	
+	function showSimilarImage(item, i) {
+
+		var rows = [];
+		
+		var IMAGE_NAME_POS = 1;
+		var FEATURES_POS = 2;
+		var G_SCORE_POS = 3;
+		var PATH_POS = 5;
+		var IMAGE_IN_PAIR_POS = 1;
+		
+        // image name
+        var imageName = item[IMAGE_NAME_POS].split(' ')[IMAGE_IN_PAIR_POS];
+		var cells = [];
+	    cells.push('<th class=\"elem-header\">' + '<b>' + "Image: " + '</b>' + imageName + '</th>');
+        rows.push('<tr>' + cells.join('') + '</tr>');
+	    
+		// picture
+	    cells = [];
+//	    var imgLink = "file://///" + item[PATH_POS].replace(/\\/g, "/") + "/" + imageName;
+//	    var imgLink = "file://" + item[PATH_POS].replace(/\\/g, "/") + "/" + imageName;
+	    var imgLink = "testcollection/" + imageName;
+	    //var imgLink = "file://E:/app-test/testcollection/O_446.jpg";
+	    if (imgLink.length > 0) {
+	    	cells.push('<td style=\"display:table-cell; vertical-align:middle; text-align:center\"><a href=\"' +  imgLink + '\"><img border=\"0\" alt=\"Europeana image\" src=\"' 
+	    		+ imgLink + '\" width=\"100\" height=\"100\"></a></td>');
+	    } 
+        rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
+		
+        // features
+	    cells = [];
+	    cells.push('<td>' + '<b>' + "Features: " + '</b>' + item[FEATURES_POS] + '</td>');
+        rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
+	    	
+        // g-score
+        cells = [];
+	    cells.push('<td>' + '<b>' + "G-score: " + '</b>' + item[G_SCORE_POS] + '</td>');
+	    rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
+
+	    var res = "<div><table class=\"grid-elem\">" +  rows.join('') + "</div></table>"
+	    return res;
+	}
+	
+	
 	function callSearchSimilarFunction(title, europeanaId, license) {
 
         //alert("Similar button clicked.");
@@ -165,7 +208,8 @@
     		        //alert(data.results);
 					var tbody = document.getElementById('mirTable');
 					//tbody.insertAdjacentHTML('beforeend', '<h1>Hello</h1>');
-					tbody.insertAdjacentHTML('beforeend', data);
+//					tbody.insertAdjacentHTML('beforeend', data);
+					tbody.insertAdjacentHTML('beforeend', createSimilarityGrid(data));
 //					tbody.insertAdjacentHTML('beforeend', createGrid(data.results));
                 } else {
     		        alert("Get request error. " + data.errorMsg);
@@ -188,6 +232,29 @@
 	        //alert("obj: " + obj);
 	        var row = [];
             row.push(showMirRecord(data[key],i));
+	        cells.push('<td>' + row + '</td>');
+	        if (i !== 0 && (i + 1) % maxColumns === 0) {
+	            rows.push('<tr>' + cells.join('') + '</tr>');
+	            cells = [];
+	        }
+	        i++;
+	    }
+	    return rows.join('');
+	}
+
+
+	function createSimilarityGrid(data) {
+		
+	    var rows = [];
+	    var cells = [];
+	   
+	    var i = 0;
+        for (var key in data) {
+	        //var mirRecord = data[i];
+	        //alert("obj: " + obj);
+	        var row = [];
+            row.push(showSimilarImage(data[key],i));
+//	        cells.push('<td>' + data[key] + '</td>'); //
 	        cells.push('<td>' + row + '</td>');
 	        if (i !== 0 && (i + 1) % maxColumns === 0) {
 	            rows.push('<tr>' + cells.join('') + '</tr>');
