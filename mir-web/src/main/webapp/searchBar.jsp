@@ -109,7 +109,9 @@
 		var IMAGE_NAME_POS = 1;
 		var FEATURES_POS = 2;
 		var G_SCORE_POS = 3;
-		var PATH_POS = 5;
+		var TITLE_POS = 8;
+		var URL_POS = 9;
+		var PATH_POS = 10;
 		var IMAGE_IN_PAIR_POS = 1;
 		
         // image name
@@ -122,14 +124,20 @@
 	    cells = [];
 //	    var imgLink = "file://///" + item[PATH_POS].replace(/\\/g, "/") + "/" + imageName;
 //	    var imgLink = "file://" + item[PATH_POS].replace(/\\/g, "/") + "/" + imageName;
-	    var imgLink = "testcollection/" + imageName;
+////	    var imgLink = "testcollection/" + imageName;
+	    var imgLink = item[URL_POS];
 	    //var imgLink = "file://E:/app-test/testcollection/O_446.jpg";
-	    if (imgLink.length > 0) {
+	    if (imgLink != null && imgLink.length > 0) {
 	    	cells.push('<td style=\"display:table-cell; vertical-align:middle; text-align:center\"><a href=\"' +  imgLink + '\"><img border=\"0\" alt=\"Europeana image\" src=\"' 
 	    		+ imgLink + '\" width=\"100\" height=\"100\"></a></td>');
 	    } 
         rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
 		
+        // title
+	    cells = [];
+	    cells.push('<td>' + '<b>' + "Title: " + '</b>' + item[TITLE_POS] + '</td>');
+        rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
+	    	
         // features
 	    cells = [];
 	    cells.push('<td>' + '<b>' + "Features: " + '</b>' + item[FEATURES_POS] + '</td>');

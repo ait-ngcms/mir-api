@@ -163,9 +163,6 @@ public class SearchController extends BaseRest {
 			
 			String results = mirService.searchCdvsByText(text, start, rows);
 			
-			//String serialized = new ObjectMapper().writeValueAsString(results);
-			
-//			return new ResponseEntity<>(serialized, HttpStatus.OK);
 			return new ResponseEntity<>(results, HttpStatus.OK);
 
 		} catch (RuntimeException e) {
