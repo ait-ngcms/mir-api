@@ -113,11 +113,18 @@
 		var URL_POS = 9;
 		var PATH_POS = 10;
 		var IMAGE_IN_PAIR_POS = 1;
+		var EUROPEANA_LINK = "http://www.europeana.eu/portal/en/record/";
+		var HTML_EXT = ".html";
+		var JPG_EXT = ".jpg";
 		
         // image name
         var imageName = item[IMAGE_NAME_POS].split(' ')[IMAGE_IN_PAIR_POS];
+        
+        // Europeana link generation
+        var europeanaLink = EUROPEANA_LINK + imageName.replace("_","/").replace(JPG_EXT,HTML_EXT);
+        
 		var cells = [];
-	    cells.push('<th class=\"elem-header\">' + '<b>' + "Image: " + '</b>' + imageName + '</th>');
+	    cells.push('<th class=\"elem-header\">' + '<b>' + "Title: " + '</b>' + item[TITLE_POS] + '</th>');
         rows.push('<tr>' + cells.join('') + '</tr>');
 	    
 		// picture
@@ -135,7 +142,7 @@
 		
         // title
 	    cells = [];
-	    cells.push('<td>' + '<b>' + "Title: " + '</b>' + item[TITLE_POS] + '</td>');
+	    cells.push('<td>' + '<b>' + "Image: " + '</b>' + imageName + '</td>');
         rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
 	    	
         // features
@@ -146,6 +153,11 @@
         // g-score
         cells = [];
 	    cells.push('<td>' + '<b>' + "G-score: " + '</b>' + item[G_SCORE_POS] + '</td>');
+	    rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
+
+        // Europeana link
+        cells = [];
+	    cells.push('<td><a href=\"' +  europeanaLink + '\">Europeana link</a></td>');
 	    rows.push('<tr class=\"elem-row\">' + cells.join('') + '</tr>');
 
 	    var res = "<div><table class=\"grid-elem\">" +  rows.join('') + "</div></table>"
