@@ -157,9 +157,17 @@ public class SearchController extends BaseRest {
 		try {			
 			
 			//validate and convert text
-			if(StringUtils.isEmpty(text))
+			if (StringUtils.isEmpty(text))
 				throw new ParamValidationException(
 						"Invalid request parameter value! ", WebMirConstants.QUERY_PARAM_TEXT, text);
+			
+			// remove first slash if exists
+			if (text.startsWith("/")) {
+				text = text.substring(1);
+			}
+			
+			// replace Europeana ID (e.g. collection/document) by file name (e.g. collection_document.jpg)
+			text = text.replace("/", "_") + ".jpg";
 			
 			String results = mirService.searchCdvsByText(text, start, rows);
 			
