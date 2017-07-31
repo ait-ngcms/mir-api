@@ -30,7 +30,7 @@ public class MirConst {
 	 */
 	protected final String LINE_BREAK = "\n"; 
 	protected final String TAB = "\t"; 
-	protected final String PATH_PARSING_DELIMITER = "\\\\";
+	//protected final String PATH_PARSING_DELIMITER = "\\\\";
 	protected final String PATH_ID_DELIMETER = "/";
 	protected final String BACK_SLASH = "\\";	
 	
