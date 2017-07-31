@@ -184,7 +184,7 @@
         
         $(document).ready(function () {
         	$.ajax({
-                url: '/mir/search',
+                url: './mir/search',
                 data: {'text':queryText, 'qdoc_id':similarTo, 'license':license, 'rows':maxCells, 'profile':"FULL"},
                 method: 'get'
             }).done(function(data){
